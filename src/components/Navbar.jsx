@@ -7,74 +7,214 @@ const Navbar = () => {
   const [aboutOpen, setAboutOpen] = useState(false)
 
   return (
-    <nav style={{background:'#1B4F72', position:'sticky', top:0, zIndex:1000}}>
-      <div style={{maxWidth:'1200px', margin:'0 auto', padding:'0 1rem', display:'flex', justifyContent:'space-between', alignItems:'center', height:'70px'}}>
-        
+    <nav style={{background: '#1B4F72', position: 'sticky', top: 0, zIndex: 1000, boxShadow: '0 2px 20px rgba(0,0,0,0.2)'}}>
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '0 1rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        height: '70px'
+      }}>
+
         {/* Logo */}
-        <Link to="/" style={{color:'white', textDecoration:'none', fontSize:'1.4rem', fontWeight:'bold'}}>
-          DreamRoots Kenya
+        <Link to="/" style={{textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+          <img
+            src="https://dreamrootskenya.com/wp-content/uploads/2025/05/head-logo.png"
+            alt="DreamRoots Kenya"
+            style={{height: '45px', objectFit: 'contain'}}
+            onError={e => {
+              e.target.style.display = 'none'
+              e.target.nextSibling.style.display = 'block'
+            }}
+          />
+          <span style={{color: 'white', fontWeight: 'bold', fontSize: '1.2rem', display: 'none'}}>
+            DreamRoots Kenya
+          </span>
         </Link>
 
         {/* Desktop Menu */}
-        <div style={{display:'flex', gap:'1.5rem', alignItems:'center'}} className="desktop-menu">
-          <Link to="/" style={{color:'white', textDecoration:'none', fontSize:'0.95rem'}}>Home</Link>
-          
+        <div style={{
+          display: 'flex',
+          gap: '1.5rem',
+          alignItems: 'center',
+          '@media (max-width: 768px)': {display: 'none'}
+        }} id="desktop-menu">
+          <Link to="/" style={{color: 'white', textDecoration: 'none', fontSize: '0.95rem'}}>Home</Link>
+
           {/* About Dropdown */}
-          <div style={{position:'relative'}}>
-            <button onClick={() => setAboutOpen(!aboutOpen)} style={{color:'white', background:'none', border:'none', cursor:'pointer', fontSize:'0.95rem'}}>
+          <div style={{position: 'relative'}}>
+            <button
+              onClick={() => { setAboutOpen(!aboutOpen); setServicesOpen(false) }}
+              style={{color: 'white', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem'}}
+            >
               About Us ▾
             </button>
             {aboutOpen && (
-              <div style={{position:'absolute', top:'100%', left:0, background:'white', minWidth:'200px', boxShadow:'0 4px 20px rgba(0,0,0,0.15)', borderRadius:'8px', padding:'0.5rem 0'}}>
-                <Link to="/about/overview" onClick={() => setAboutOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>Overview</Link>
-                <Link to="/about/board" onClick={() => setAboutOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>Board of Directors</Link>
-                <Link to="/about/team" onClick={() => setAboutOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>Management Team</Link>
-                <Link to="/about/testimonials" onClick={() => setAboutOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>Testimonials</Link>
+              <div style={{
+                position: 'absolute', top: '100%', left: 0,
+                background: 'white', minWidth: '200px',
+                boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
+                borderRadius: '8px', padding: '0.5rem 0',
+                zIndex: 100
+              }}>
+                {[
+                  {label: 'Overview', path: '/about/overview'},
+                  {label: 'Board of Directors', path: '/about/board'},
+                  {label: 'Management Team', path: '/about/team'},
+                  {label: 'Testimonials', path: '/about/testimonials'},
+                ].map((item, i) => (
+                  <Link key={i} to={item.path} onClick={() => setAboutOpen(false)} style={{
+                    display: 'block', padding: '0.7rem 1.2rem',
+                    color: '#1B4F72', textDecoration: 'none', fontSize: '0.9rem',
+                    borderBottom: i < 3 ? '1px solid #f0f0f0' : 'none'
+                  }}
+                  onMouseEnter={e => e.target.style.background = '#EBF5FB'}
+                  onMouseLeave={e => e.target.style.background = 'transparent'}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </div>
             )}
           </div>
 
           {/* Services Dropdown */}
-          <div style={{position:'relative'}}>
-            <button onClick={() => setServicesOpen(!servicesOpen)} style={{color:'white', background:'none', border:'none', cursor:'pointer', fontSize:'0.95rem'}}>
+          <div style={{position: 'relative'}}>
+            <button
+              onClick={() => { setServicesOpen(!servicesOpen); setAboutOpen(false) }}
+              style={{color: 'white', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem'}}
+            >
               Services ▾
             </button>
             {servicesOpen && (
-              <div style={{position:'absolute', top:'100%', left:0, background:'white', minWidth:'220px', boxShadow:'0 4px 20px rgba(0,0,0,0.15)', borderRadius:'8px', padding:'0.5rem 0'}}>
-                <Link to="/services/education-consultancy" onClick={() => setServicesOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>Education Consultancy</Link>
-                <Link to="/services/ict" onClick={() => setServicesOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>ICT</Link>
-                <Link to="/services/finance" onClick={() => setServicesOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>Finance</Link>
-                <Link to="/services/human-resource-management" onClick={() => setServicesOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>Human Resource Management</Link>
-                <Link to="/services/marketing" onClick={() => setServicesOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>Marketing</Link>
-                <Link to="/services/research" onClick={() => setServicesOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>Research</Link>
-                <Link to="/services/soft-skills-training" onClick={() => setServicesOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>Soft Skills Training</Link>
-                <Link to="/services/training-capacity-building" onClick={() => setServicesOpen(false)} style={{display:'block', padding:'0.6rem 1rem', color:'#1B4F72', textDecoration:'none', fontSize:'0.9rem'}}>Training & Capacity Building</Link>
+              <div style={{
+                position: 'absolute', top: '100%', left: 0,
+                background: 'white', minWidth: '240px',
+                boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
+                borderRadius: '8px', padding: '0.5rem 0',
+                zIndex: 100
+              }}>
+                {[
+                  {label: '🎓 Education Consultancy', path: '/services/education-consultancy'},
+                  {label: '💻 ICT Solutions', path: '/services/ict'},
+                  {label: '📊 Finance', path: '/services/finance'},
+                  {label: '👥 Human Resource Management', path: '/services/human-resource-management'},
+                  {label: '📢 Marketing', path: '/services/marketing'},
+                  {label: '🔬 Research', path: '/services/research'},
+                  {label: '🌟 Soft Skills Training', path: '/services/soft-skills-training'},
+                  {label: '🚀 Training & Capacity Building', path: '/services/training-capacity-building'},
+                ].map((item, i, arr) => (
+                  <Link key={i} to={item.path} onClick={() => setServicesOpen(false)} style={{
+                    display: 'block', padding: '0.7rem 1.2rem',
+                    color: '#1B4F72', textDecoration: 'none', fontSize: '0.9rem',
+                    borderBottom: i < arr.length - 1 ? '1px solid #f0f0f0' : 'none'
+                  }}
+                  onMouseEnter={e => e.target.style.background = '#EBF5FB'}
+                  onMouseLeave={e => e.target.style.background = 'transparent'}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </div>
             )}
           </div>
 
-          <Link to="/publications" style={{color:'white', textDecoration:'none', fontSize:'0.95rem'}}>Publications</Link>
-          <Link to="/contact" style={{color:'white', textDecoration:'none', fontSize:'0.95rem'}}>Contact</Link>
-          <Link to="/booking" style={{background:'#2E86C1', color:'white', textDecoration:'none', padding:'0.5rem 1.2rem', borderRadius:'25px', fontSize:'0.9rem', fontWeight:'bold'}}>Book Now</Link>
+          <Link to="/publications" style={{color: 'white', textDecoration: 'none', fontSize: '0.95rem'}}>Publications</Link>
+          <Link to="/contact" style={{color: 'white', textDecoration: 'none', fontSize: '0.95rem'}}>Contact</Link>
+          <Link to="/booking" style={{
+            background: '#2E86C1',
+            color: 'white',
+            textDecoration: 'none',
+            padding: '0.5rem 1.2rem',
+            borderRadius: '25px',
+            fontSize: '0.9rem',
+            fontWeight: 'bold'
+          }}>
+            Book Now
+          </Link>
         </div>
 
-        {/* Mobile Hamburger */}
-        <button onClick={() => setIsOpen(!isOpen)} style={{display:'none', background:'none', border:'none', cursor:'pointer', color:'white', fontSize:'1.5rem'}} className="hamburger">
+        {/* Hamburger Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            color: 'white',
+            fontSize: '1.8rem',
+            display: 'none',
+            padding: '0.3rem'
+          }}
+          id="hamburger-btn"
+        >
           {isOpen ? '✕' : '☰'}
         </button>
       </div>
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div style={{background:'#1B4F72', padding:'1rem', borderTop:'1px solid rgba(255,255,255,0.2)'}}>
-          <Link to="/" onClick={() => setIsOpen(false)} style={{display:'block', color:'white', textDecoration:'none', padding:'0.7rem 0', borderBottom:'1px solid rgba(255,255,255,0.1)'}}>Home</Link>
-          <Link to="/about/overview" onClick={() => setIsOpen(false)} style={{display:'block', color:'white', textDecoration:'none', padding:'0.7rem 0', borderBottom:'1px solid rgba(255,255,255,0.1)'}}>About Us</Link>
-          <Link to="/services" onClick={() => setIsOpen(false)} style={{display:'block', color:'white', textDecoration:'none', padding:'0.7rem 0', borderBottom:'1px solid rgba(255,255,255,0.1)'}}>Services</Link>
-          <Link to="/publications" onClick={() => setIsOpen(false)} style={{display:'block', color:'white', textDecoration:'none', padding:'0.7rem 0', borderBottom:'1px solid rgba(255,255,255,0.1)'}}>Publications</Link>
-          <Link to="/contact" onClick={() => setIsOpen(false)} style={{display:'block', color:'white', textDecoration:'none', padding:'0.7rem 0', borderBottom:'1px solid rgba(255,255,255,0.1)'}}>Contact</Link>
-          <Link to="/booking" onClick={() => setIsOpen(false)} style={{display:'block', color:'white', textDecoration:'none', padding:'0.7rem 1rem', marginTop:'0.5rem', background:'#2E86C1', borderRadius:'25px', textAlign:'center', fontWeight:'bold'}}>Book Now</Link>
+        <div style={{
+          background: '#154360',
+          padding: '1rem',
+          borderTop: '1px solid rgba(255,255,255,0.1)'
+        }}>
+          {[
+            {label: 'Home', path: '/'},
+            {label: 'About — Overview', path: '/about/overview'},
+            {label: 'Board of Directors', path: '/about/board'},
+            {label: 'Management Team', path: '/about/team'},
+            {label: 'Services', path: '/services'},
+            {label: 'Education Consultancy', path: '/services/education-consultancy'},
+            {label: 'ICT Solutions', path: '/services/ict'},
+            {label: 'Finance', path: '/services/finance'},
+            {label: 'HRM', path: '/services/human-resource-management'},
+            {label: 'Marketing', path: '/services/marketing'},
+            {label: 'Research', path: '/services/research'},
+            {label: 'Soft Skills', path: '/services/soft-skills-training'},
+            {label: 'Training & Capacity', path: '/services/training-capacity-building'},
+            {label: 'Publications', path: '/publications'},
+            {label: 'Contact Us', path: '/contact'},
+          ].map((item, i) => (
+            <Link key={i} to={item.path} onClick={() => setIsOpen(false)} style={{
+              display: 'block',
+              color: 'white',
+              textDecoration: 'none',
+              padding: '0.7rem 0.5rem',
+              borderBottom: '1px solid rgba(255,255,255,0.1)',
+              fontSize: '0.95rem'
+            }}>
+              {item.label}
+            </Link>
+          ))}
+          <Link to="/booking" onClick={() => setIsOpen(false)} style={{
+            display: 'block',
+            background: '#2E86C1',
+            color: 'white',
+            textDecoration: 'none',
+            padding: '0.8rem',
+            borderRadius: '25px',
+            textAlign: 'center',
+            fontWeight: 'bold',
+            marginTop: '1rem'
+          }}>
+            Book Now
+          </Link>
         </div>
       )}
+
+      {/* CSS for responsive */}
+      <style>{`
+        @media (max-width: 768px) {
+          #desktop-menu { display: none !important; }
+          #hamburger-btn { display: block !important; }
+        }
+        @media (min-width: 769px) {
+          #hamburger-btn { display: none !important; }
+        }
+      `}</style>
     </nav>
   )
 }
