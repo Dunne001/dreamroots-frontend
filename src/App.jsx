@@ -4,6 +4,7 @@ import Hero from './components/Hero'
 import ServicesSection from './components/ServicesSection'
 import StatsSection from './components/StatsSection'
 import TestimonialsSection from './components/TestimonialsSection'
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <ServicesSection />
             <StatsSection />
             <TestimonialsSection />
+            <Footer />
           </>
         } />
       </Routes>
