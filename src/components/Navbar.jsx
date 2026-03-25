@@ -19,20 +19,28 @@ const Navbar = () => {
       }}>
 
         {/* Logo */}
-        <Link to="/" style={{textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-          <img
-            src="https://dreamrootskenya.com/wp-content/uploads/2025/05/head-logo.png"
-            alt="DreamRoots Kenya"
-            style={{height: '45px', objectFit: 'contain'}}
-            onError={e => {
-              e.target.style.display = 'none'
-              e.target.nextSibling.style.display = 'block'
-            }}
-          />
-          <span style={{color: 'white', fontWeight: 'bold', fontSize: '1.2rem', display: 'none'}}>
-            DreamRoots Kenya
-          </span>
-        </Link>
+<Link to="/" style={{textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+  <div style={{
+    background: 'white',
+    borderRadius: '8px',
+    padding: '4px 8px',
+    display: 'flex',
+    alignItems: 'center'
+  }}>
+    <img
+      src="https://dreamrootskenya.com/wp-content/uploads/2025/05/head-logo.png"
+      alt="DreamRoots Kenya"
+      style={{height: '45px', objectFit: 'contain'}}
+      onError={e => {
+        e.target.style.display = 'none'
+        e.target.nextSibling.style.display = 'block'
+      }}
+    />
+    <span style={{color: '#1B4F72', fontWeight: 'bold', fontSize: '1.1rem', display: 'none'}}>
+      DreamRoots Kenya
+    </span>
+  </div>
+</Link>
 
         {/* Desktop Menu */}
         <div style={{

@@ -19,18 +19,21 @@ const servicesData = {
     ]
   },
   'ict': {
-    title: 'ICT Solutions',
-    icon: '💻',
-    color: '#117A65',
-    intro: 'Stay ahead in the digital age with our comprehensive ICT solutions designed to drive efficiency, innovation, and competitive advantage.',
-    sections: [
-      { title: 'IT Strategy & Planning', content: 'Developing clear, actionable IT roadmaps that prioritize investments, optimize resources, and anticipate future trends. We assess your current technology landscape, identify gaps, and recommend scalable solutions.' },
-      { title: 'Network Infrastructure & Cloud Solutions', content: 'Designing, implementing, and managing robust network architectures. We specialize in cloud solutions including private, public, and hybrid environments that enhance flexibility, reduce costs, and improve accessibility.' },
-      { title: 'Software Development & Integration', content: 'Crafting tailored applications using agile methodologies to deliver scalable, user-friendly software. We provide end-to-end development including ERP, CRM, and specialized tools with ongoing support.' },
-      { title: 'Cybersecurity & Risk Mitigation', content: 'Comprehensive cybersecurity services including risk assessments, vulnerability testing, security audits, firewalls, encryption, intrusion detection, and incident response planning.' },
-      { title: 'Ongoing IT Support & Maintenance', content: 'Proactive monitoring, troubleshooting, and maintenance to keep your systems running smoothly. Flexible service agreements including helpdesk support, system updates, and performance optimization.' },
-    ]
-  },
+  title: 'ICT Solutions',
+  icon: '💻',
+  color: '#117A65',
+  intro: 'In today\'s digital-first world, technology is the backbone of every successful organization. DreamRoots Kenya delivers cutting-edge ICT solutions that drive real business results.',
+  sections: [
+    { title: 'AI & Machine Learning Integration', content: 'Harness the power of Artificial Intelligence to automate processes, predict trends, and make smarter decisions. We help businesses in Kenya integrate AI tools including chatbots, predictive analytics, and automated reporting systems that save time and reduce costs significantly.' },
+    { title: 'Cloud Computing & Migration', content: 'Move your business to the cloud seamlessly. We handle migration from legacy systems to modern cloud platforms including AWS, Google Cloud, and Microsoft Azure. Cloud adoption reduces IT costs by up to 40% while improving accessibility, security, and scalability for your entire team.' },
+    { title: 'Mobile App Development', content: 'Kenya has one of the highest mobile penetration rates in Africa. We build powerful Android and iOS applications that connect you with your customers where they are — on their phones. From M-Pesa integrations to customer portals, we deliver apps that drive real business value.' },
+    { title: 'Data Analytics & Business Intelligence', content: 'Turn your raw data into actionable insights. Our data analytics services help you understand your customers, track performance, and identify growth opportunities. We implement dashboards and reporting tools that give you real-time visibility into what matters most.' },
+    { title: 'Cybersecurity & Data Protection', content: 'With cybercrime on the rise across East Africa, protecting your digital assets is critical. We conduct security audits, implement firewalls, train your staff, and ensure compliance with data protection regulations including Kenya\'s Data Protection Act 2019.' },
+    { title: 'ERP & Business Systems Implementation', content: 'Streamline your operations with integrated Enterprise Resource Planning systems. We implement and customize ERP solutions for accounting, inventory, HR, and customer management — giving you one unified system that eliminates manual errors and duplication.' },
+    { title: 'IT Infrastructure & Network Setup', content: 'From office network setup to server configuration and internet connectivity optimization, we build reliable IT infrastructure that keeps your business running 24/7. We serve organizations of all sizes across Nairobi and Kenya.' },
+    { title: 'ICT Training & Digital Skills', content: 'Empower your team with practical digital skills. Our ICT training programs cover Microsoft Office, Google Workspace, cybersecurity awareness, and specialized software tools. We offer both in-person and online training tailored to your team\'s needs and schedule.' },
+  ]
+},
   'finance': {
     title: 'Finance',
     icon: '📊',
@@ -73,19 +76,22 @@ const servicesData = {
       { title: 'Market Research & Analytics', content: 'Providing in-depth market research through surveys, focus groups, and digital analytics tools. Our reporting dashboards give real-time visibility into campaign performance and market trends.' },
     ]
   },
-  'research': {
-    title: 'Research',
-    icon: '🔬',
-    color: '#1B4F72',
-    intro: 'Make informed decisions with our comprehensive research services that provide actionable insights and evidence-based strategies.',
-    sections: [
-      { title: 'Market & Sector Studies', content: 'Comprehensive market research covering industry analysis, competitor landscapes, consumer behavior, and market sizing to inform your strategic decisions.' },
-      { title: 'Data Collection & Analysis', content: 'Rigorous data collection methodologies including surveys, interviews, focus groups, and quantitative analysis to generate reliable and actionable insights.' },
-      { title: 'Feasibility Studies', content: 'Thorough feasibility assessments evaluating the viability of new projects, investments, or business ventures through technical, financial, and market analysis.' },
-      { title: 'Impact Assessments', content: 'Evaluating the social, economic, and environmental impact of programs and projects to measure effectiveness and guide future improvements.' },
-      { title: 'Monitoring & Evaluation', content: 'Designing and implementing M&E frameworks to track progress against goals, identify challenges, and ensure programs deliver intended outcomes.' },
-    ]
-  },
+ 'research': {
+  title: 'Research & Consultancy',
+  icon: '🔬',
+  color: '#1B4F72',
+  intro: 'Evidence-based decisions lead to better outcomes. DreamRoots Kenya provides rigorous, professional research services across multiple sectors to inform strategy, policy, and investment.',
+  sections: [
+    { title: 'Market Research & Feasibility Studies', content: 'Before launching a product, entering a new market, or making a major investment, you need reliable data. We conduct comprehensive market research including competitor analysis, consumer surveys, and feasibility assessments that give you the confidence to make informed decisions.' },
+    { title: 'Health Sector Research', content: 'We specialize in health systems research, disease burden studies, health facility assessments, and community health surveys. Our team has experience working with hospitals, NGOs, county governments, and international health organizations across Kenya. We help health institutions improve service delivery through evidence-based recommendations.' },
+    { title: 'Proposal & Grant Writing', content: 'Securing funding is highly competitive. Our expert proposal writers craft compelling, technically sound proposals for government tenders, NGO grants, bilateral funding, and research grants. We have a strong track record of successful proposals across education, health, agriculture, and community development sectors.' },
+    { title: 'Policy Research & Analysis', content: 'We conduct in-depth policy research to inform government agencies, NGOs, and private sector organizations. Our policy briefs, white papers, and advocacy documents are grounded in solid evidence and presented in clear, accessible language for decision-makers.' },
+    { title: 'Monitoring, Evaluation & Learning (MEL)', content: 'We design and implement robust M&E frameworks that track program progress, measure impact, and generate learning for continuous improvement. Our MEL services include baseline studies, mid-term evaluations, end-line assessments, and real-time monitoring dashboards.' },
+    { title: 'Social & Community Research', content: 'Understanding communities is key to effective interventions. We conduct social research including focus group discussions, key informant interviews, household surveys, and participatory research. Our findings help organizations design programs that genuinely address community needs.' },
+    { title: 'Academic Research Support', content: 'We support students, researchers, and institutions with research design, data collection tools, statistical analysis, and report writing. Whether you are pursuing a Masters, PhD, or institutional research, our experienced team provides professional guidance at every stage.' },
+    { title: 'Agricultural & Environmental Research', content: 'We conduct research in food security, value chain analysis, environmental impact assessments, and climate change adaptation. Our agricultural research supports farmers, agribusinesses, and development organizations in improving productivity and sustainability.' },
+  ]
+},
   'soft-skills-training': {
     title: 'Soft Skills Training',
     icon: '🌟',
