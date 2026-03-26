@@ -58,7 +58,7 @@ const ContactPage = () => {
           {[
             { icon: '📍', label: 'Address', value: 'P.O Box 1152-00511, Nairobi, Kenya' },
             { icon: '📞', label: 'Phone', value: '+254 759 098 449' },
-            { icon: '📱', label: 'Booking', value: '+254 721 675 766' },
+            { icon: '📱', label: 'Booking', value: '+254 759 098 449' },
             { icon: '📧', label: 'Email', value: 'info@dreamrootskenya.com' },
           ].map((item, i) => (
             <div key={i} style={{
