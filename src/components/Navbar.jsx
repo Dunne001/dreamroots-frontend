@@ -130,6 +130,7 @@ const Navbar = () => {
           </div>
 
           <Link to="/publications" style={{color: 'white', textDecoration: 'none', fontSize: '0.95rem'}}>Publications</Link>
+          <Link to="/partners-affiliations" style={{color: 'white', textDecoration: 'none', fontSize: '0.95rem'}}>Partners</Link>
           <Link to="/contact" style={{color: 'white', textDecoration: 'none', fontSize: '0.95rem'}}>Contact</Link>
           <Link to="/booking" style={{
             background: '#2E86C1',
