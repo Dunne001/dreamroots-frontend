@@ -6,6 +6,7 @@ import StatsSection from './components/StatsSection'
 import TestimonialsSection from './components/TestimonialsSection'
 import Footer from './components/Footer'
 import BackToTop from './components/BackToTop'
+import WhatsAppButton from './components/WhatsAppButton'
 import ContactPage from './pages/ContactPage'
 import BookingPage from './pages/BookingPage'
 import AboutPage from './pages/AboutPage'
@@ -43,6 +44,7 @@ function App() {
         <Route path="/partners-affiliations" element={<PartnersPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <WhatsAppButton />
       <BackToTop />
     </Router>
   )
