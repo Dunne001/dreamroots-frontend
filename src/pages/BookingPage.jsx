@@ -1,142 +1,85 @@
-import { useState } from 'react'
-import Footer from '../components/Footer'
+import { useState, useEffect } from 'react';
+import api from '../utils/api';
 
-const services = [
-  'Education Consultancy',
-  'ICT Solutions',
-  'Finance',
-  'Human Resource Management',
-  'Marketing',
-  'Research',
-  'Soft Skills Training',
-  'Training & Capacity Building'
-]
+export default function BookingPage() {
+  const [services, setServices] = useState([]);
+  const [form, setForm] = useState({ name: '', email: '', phone: '', service_id: '', preferred_date: '', message: '' });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
-const BookingPage = () => {
-  const [form, setForm] = useState({
-    name: '', email: '', phone: '',
-    service: '', preferred_date: '', message: ''
-  })
-  const [status, setStatus] = useState('')
-  const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    api.get('/services').then(res => setServices(res.data)).catch(console.error);
+  }, []);
 
-  const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+  const handle = e => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async e => {
-    e.preventDefault()
-    setLoading(true)
+  const submit = async e => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
     try {
-      const res = await fetch('http://localhost:8000/api/v1/booking', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
-      })
-      if (res.ok) {
-        setStatus('success')
-        setForm({ name: '', email: '', phone: '', service: '', preferred_date: '', message: '' })
-      } else {
-        setStatus('error')
-      }
-    } catch {
-      setStatus('error')
+      await api.post('/booking', form);
+      setSuccess(true);
+      setForm({ name: '', email: '', phone: '', service_id: '', preferred_date: '', message: '' });
+    } catch (err) {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false)
-  }
+  };
+
+  const inputStyle = {
+    width: '100%', padding: '12px 16px', borderRadius: '8px',
+    border: '1px solid #ddd', fontSize: '1rem', marginBottom: '16px',
+    boxSizing: 'border-box', fontFamily: 'inherit',
+  };
 
   return (
-    <div>
-      <div style={{
-        background: 'linear-gradient(135deg, #117A65 0%, #1ABC9C 100%)',
-        padding: '5rem 1rem',
-        textAlign: 'center'
-      }}>
-        <p style={{color: '#A9DFBF', letterSpacing: '3px', textTransform: 'uppercase', fontSize: '0.9rem', marginBottom: '0.5rem'}}>
-          Schedule a Meeting
-        </p>
-        <h1 style={{color: 'white', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 'bold', marginBottom: '1rem'}}>
-          Book a Consultation
-        </h1>
-        <p style={{color: '#D5F5E3', fontSize: '1.1rem', maxWidth: '500px', margin: '0 auto'}}>
-          Take the first step towards transforming your organization. Book a consultation with our experts today.
+    <div style={{ paddingTop: '80px', minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
+      <div style={{ backgroundColor: '#1B4F72', padding: '60px 20px', textAlign: 'center' }}>
+        <h1 style={{ color: '#fff', fontSize: '2.5rem', marginBottom: '16px' }}>Book a Consultation</h1>
+        <p style={{ color: '#ccc', fontSize: '1.1rem' }}>Schedule a session with our expert consultants</p>
+        <p style={{ color: '#aaa', fontSize: '0.95rem', marginTop: '8px' }}>
+          📞 Booking enquiries: <a href="tel:+254721675766" style={{ color: '#fff' }}>+254 721 675 766</a>
         </p>
       </div>
-
-      <div style={{maxWidth: '700px', margin: '0 auto', padding: '5rem 1rem'}}>
-        {status === 'success' && (
-          <div style={{background: '#D5F5E3', border: '1px solid #27AE60', borderRadius: '8px', padding: '1rem', marginBottom: '1.5rem', color: '#1E8449', textAlign: 'center'}}>
-            Booking submitted successfully! We will contact you shortly.
-          </div>
-        )}
-        {status === 'error' && (
-          <div style={{background: '#FADBD8', border: '1px solid #E74C3C', borderRadius: '8px', padding: '1rem', marginBottom: '1.5rem', color: '#C0392B', textAlign: 'center'}}>
-            Something went wrong. Please try again.
-          </div>
-        )}
-
-        <div style={{background: 'white', borderRadius: '16px', padding: '2.5rem', boxShadow: '0 8px 40px rgba(0,0,0,0.1)'}}>
-          <h2 style={{color: '#1B4F72', fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '2rem', textAlign: 'center'}}>
-            Fill in Your Details
-          </h2>
-          <form onSubmit={handleSubmit}>
-
-            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.2rem'}}>
-              <div>
-                <label style={{display: 'block', color: '#444', marginBottom: '0.4rem', fontWeight: '500', fontSize: '0.9rem'}}>Full Name *</label>
-                <input type="text" name="name" value={form.name} onChange={handleChange} required placeholder="Your name"
-                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '0.95rem', boxSizing: 'border-box'}} />
-              </div>
-              <div>
-                <label style={{display: 'block', color: '#444', marginBottom: '0.4rem', fontWeight: '500', fontSize: '0.9rem'}}>Email *</label>
-                <input type="email" name="email" value={form.email} onChange={handleChange} required placeholder="your@email.com"
-                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '0.95rem', boxSizing: 'border-box'}} />
-              </div>
-            </div>
-
-            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.2rem'}}>
-              <div>
-                <label style={{display: 'block', color: '#444', marginBottom: '0.4rem', fontWeight: '500', fontSize: '0.9rem'}}>Phone *</label>
-                <input type="text" name="phone" value={form.phone} onChange={handleChange} required placeholder="+254..."
-                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '0.95rem', boxSizing: 'border-box'}} />
-              </div>
-              <div>
-                <label style={{display: 'block', color: '#444', marginBottom: '0.4rem', fontWeight: '500', fontSize: '0.9rem'}}>Service</label>
-                <select name="service" value={form.service} onChange={handleChange}
-                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '0.95rem', boxSizing: 'border-box'}}>
-                  <option value="">Select a service</option>
-                  {services.map((s, i) => <option key={i} value={s}>{s}</option>)}
-                </select>
-              </div>
-            </div>
-
-            <div style={{marginBottom: '1.2rem'}}>
-              <label style={{display: 'block', color: '#444', marginBottom: '0.4rem', fontWeight: '500', fontSize: '0.9rem'}}>Preferred Date</label>
-              <input type="date" name="preferred_date" value={form.preferred_date} onChange={handleChange}
-                style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '0.95rem', boxSizing: 'border-box'}} />
-            </div>
-
-            <div style={{marginBottom: '1.5rem'}}>
-              <label style={{display: 'block', color: '#444', marginBottom: '0.4rem', fontWeight: '500', fontSize: '0.9rem'}}>Message</label>
-              <textarea name="message" value={form.message} onChange={handleChange} placeholder="Tell us about your needs..." rows={4}
-                style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '0.95rem', resize: 'vertical', boxSizing: 'border-box'}} />
-            </div>
-
-            <button type="submit" disabled={loading} style={{
-              background: loading ? '#888' : 'linear-gradient(135deg, #117A65, #1ABC9C)',
-              color: 'white', border: 'none',
-              padding: '1rem 2.5rem', borderRadius: '25px',
-              fontSize: '1rem', fontWeight: 'bold',
-              cursor: loading ? 'not-allowed' : 'pointer', width: '100%'
-            }}>
-              {loading ? 'Submitting...' : 'Book Consultation'}
+      <div style={{ maxWidth: '700px', margin: '0 auto', padding: '60px 20px' }}>
+        {success ? (
+          <div style={{ backgroundColor: '#d4edda', borderRadius: '12px', padding: '40px', textAlign: 'center' }}>
+            <p style={{ fontSize: '2rem' }}>✅</p>
+            <h3 style={{ color: '#155724' }}>Booking Received!</h3>
+            <p style={{ color: '#155724' }}>Thank you! We'll confirm your consultation shortly.</p>
+            <button onClick={() => setSuccess(false)} style={{ marginTop: '16px', backgroundColor: '#1B4F72', color: '#fff', border: 'none', padding: '10px 24px', borderRadius: '8px', cursor: 'pointer' }}>
+              Book Another
             </button>
-          </form>
-        </div>
+          </div>
+        ) : (
+          <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '40px', boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
+            <form onSubmit={submit}>
+              <input name="name" placeholder="Full Name *" value={form.name} onChange={handle} required style={inputStyle} />
+              <input name="email" type="email" placeholder="Email Address *" value={form.email} onChange={handle} required style={inputStyle} />
+              <input name="phone" placeholder="Phone Number *" value={form.phone} onChange={handle} required style={inputStyle} />
+              <select name="service_id" value={form.service_id} onChange={handle} required style={inputStyle}>
+                <option value="">Select a Service *</option>
+                {services.map(s => (
+                  <option key={s.id} value={s.id}>{s.name}</option>
+                ))}
+              </select>
+              <input name="preferred_date" type="date" value={form.preferred_date} onChange={handle} style={inputStyle} />
+              <textarea name="message" placeholder="Additional notes or questions" value={form.message} onChange={handle} rows={4} style={{ ...inputStyle, resize: 'vertical' }} />
+              {error && <p style={{ color: '#e74c3c', marginBottom: '12px' }}>{error}</p>}
+              <button type="submit" disabled={loading} style={{
+                backgroundColor: '#1B4F72', color: '#fff', border: 'none',
+                padding: '14px 32px', borderRadius: '8px', fontSize: '1rem',
+                cursor: loading ? 'not-allowed' : 'pointer', width: '100%', fontWeight: '600'
+              }}>
+                {loading ? 'Submitting...' : 'Request Consultation'}
+              </button>
+            </form>
+          </div>
+        )}
       </div>
-      <Footer />
     </div>
-  )
+  );
 }
-
-export default BookingPage
