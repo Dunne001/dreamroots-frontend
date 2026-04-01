@@ -23,22 +23,29 @@ const Navbar = () => {
   <div style={{
     background: 'white',
     borderRadius: '8px',
-    padding: '4px 8px',
+    padding: '6px 12px',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: '8px'
   }}>
-    <img
-      src="https://dreamrootskenya.com/wp-content/uploads/2025/05/head-logo.png"
-      alt="DreamRoots Kenya"
-      style={{height: '45px', objectFit: 'contain'}}
-      onError={e => {
-        e.target.style.display = 'none'
-        e.target.nextSibling.style.display = 'block'
-      }}
-    />
-    <span style={{color: '#1B4F72', fontWeight: 'bold', fontSize: '1.1rem', display: 'none'}}>
-      DreamRoots Kenya
-    </span>
+    <div style={{
+      width: '38px',
+      height: '38px',
+      background: 'linear-gradient(135deg, #117A65, #1B4F72)',
+      borderRadius: '50%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17 8C17 11.31 14.76 14.08 11.75 14.82L11 22H13V24H11H9H7V22H9L8.25 14.82C5.24 14.08 3 11.31 3 8C3 4.13 6.13 1 10 1C10.34 1 10.67 1.03 11 1.08V3.09C10.68 3.03 10.34 3 10 3C7.24 3 5 5.24 5 8C5 10.76 7.24 13 10 13C12.76 13 15 10.76 15 8H17Z"/>
+        <path d="M15 2L13 5H15L12 10L14 10L11 15H21L18 10L20 10L17 5H19L15 2Z"/>
+      </svg>
+    </div>
+    <div style={{display: 'flex', flexDirection: 'column', lineHeight: '1.1'}}>
+      <span style={{color: '#1B4F72', fontWeight: '800', fontSize: '1rem', letterSpacing: '0.5px'}}>DreamRoots</span>
+      <span style={{color: '#117A65', fontWeight: '600', fontSize: '0.7rem', letterSpacing: '1px', textTransform: 'uppercase'}}>Kenya</span>
+    </div>
   </div>
 </Link>
 

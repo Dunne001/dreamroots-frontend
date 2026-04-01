@@ -52,7 +52,7 @@ export default function TeamPage() {
                     marginBottom: '16px',
                     border: '3px solid #2E86C1'
                   }}
-                  onError={e => e.target.src = 'https://dreamrootskenya.com/team/male.png'}
+                  onError={e => { e.target.onerror = null; e.target.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(member.name) + '&background=1B4F72&color=fff&size=200'; }}
                 />
                 <h3 style={{ color: '#1B4F72', fontSize: '1.1rem', marginBottom: '6px' }}>
                   {member.name}
