@@ -41,7 +41,7 @@ export default function BookingPage() {
         <h1 style={{ color: '#fff', fontSize: '2.5rem', marginBottom: '16px' }}>Book a Consultation</h1>
         <p style={{ color: '#ccc', fontSize: '1.1rem' }}>Schedule a session with our expert consultants</p>
         <p style={{ color: '#aaa', fontSize: '0.95rem', marginTop: '8px' }}>
-          📞 Booking enquiries: <a href="tel:+254721675766" style={{ color: '#fff' }}>+254 721 675 766</a>
+          📞 Booking enquiries: <a href="tel:+254759098449" style={{ color: '#fff' }}>+254 759 098 449</a>
         </p>
       </div>
       <div style={{ maxWidth: '700px', margin: '0 auto', padding: '60px 20px' }}>
