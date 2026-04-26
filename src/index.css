@@ -1,1 +1,34 @@
+@import 'swiper/css';
+@import 'swiper/css/effect-fade';
+@import 'swiper/css/pagination';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 @import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-navy: #0B1F3B;
+  --color-gold: #C9A227;
+  --color-light: #F7F9FC;
+  --color-surface: #FFFFFF;
+  
+  /* Typography */
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+
+  /* Premium Radii */
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+
+  /* Openclaw/Premium Subtle Shadows */
+  --shadow-premium: 0 4px 20px -2px rgba(11, 31, 59, 0.05);
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-light text-gray-900 antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-navy;
+  }
+}

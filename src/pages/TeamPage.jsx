@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import api from '../utils/api';
 
 export default function TeamPage() {
@@ -17,53 +18,62 @@ export default function TeamPage() {
   }, [isBoard]);
 
   return (
-    <div style={{ paddingTop: '80px', minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
-      <div style={{ backgroundColor: '#1B4F72', padding: '60px 20px', textAlign: 'center' }}>
-        <h1 style={{ color: '#fff', fontSize: '2.5rem', marginBottom: '16px' }}>
-          {isBoard ? 'Board of Directors' : 'Management Team'}
-        </h1>
-        <p style={{ color: '#ccc', fontSize: '1.1rem' }}>
-          Meet the dedicated professionals behind DreamRoots Kenya
-        </p>
+    <div className="bg-light min-h-screen">
+      {/* Hero Section */}
+      <div className="bg-navy py-24 px-6 text-center">
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-4xl md:text-5xl font-serif text-white mb-6"
+        >
+          {isBoard ? 'Board of Directors' : 'Executive Management'}
+        </motion.h1>
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-gray-300 text-lg font-sans max-w-xl mx-auto"
+        >
+          {isBoard 
+            ? "Strategic governance and visionary leadership driving sustainable institutional success."
+            : "Operational excellence and industry expertise dedicated to your organizational growth."}
+        </motion.p>
       </div>
-      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '60px 20px' }}>
+
+      {/* Team Grid */}
+      <div className="max-w-7xl mx-auto px-6 py-20">
         {loading ? (
-          <p style={{ textAlign: 'center', color: '#1B4F72' }}>Loading team...</p>
+          <div className="text-center py-20 text-navy font-serif">Loading expertise...</div>
         ) : (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '28px'
-          }}>
-            {members.map(member => (
-              <div key={member.id} style={{
-                backgroundColor: '#fff',
-                borderRadius: '16px',
-                padding: '32px 24px',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
-                textAlign: 'center',
-              }}>
-                <img
-                  src={member.photo}
-                  alt={member.name}
-                  style={{
-                    width: '100px', height: '100px',
-                    borderRadius: '50%', objectFit: 'cover',
-                    marginBottom: '16px',
-                    border: '3px solid #2E86C1'
-                  }}
-                  onError={e => { e.target.onerror = null; e.target.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(member.name) + '&background=1B4F72&color=fff&size=200'; }}
-                />
-                <h3 style={{ color: '#1B4F72', fontSize: '1.1rem', marginBottom: '6px' }}>
-                  {member.name}
-                </h3>
-                <p style={{ color: '#2E86C1', fontSize: '0.9rem', fontWeight: '600', marginBottom: '12px' }}>
-                  {member.role}
-                </p>
-                <p style={{ color: '#666', fontSize: '0.85rem', lineHeight: '1.6' }}>
-                  {member.bio}
-                </p>
-              </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {members.map((member, index) => (
+              <motion.div
+                key={member.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-surface rounded-2xl overflow-hidden border border-gray-100 shadow-premium group"
+              >
+                {/* Executive Image Container */}
+                <div className="h-80 overflow-hidden">
+                  <img
+                    src={member.photo}
+                    alt={member.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={e => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=0B1F3B&color=fff&size=400`; }}
+                  />
+                </div>
+                
+                {/* Content */}
+                <div className="p-8 text-center">
+                  <h3 className="text-xl font-serif text-navy mb-1">{member.name}</h3>
+                  <p className="text-gold font-medium text-sm tracking-wide uppercase mb-4">{member.role}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed font-sans italic">
+                    "{member.bio}"
+                  </p>
+                </div>
+              </motion.div>
             ))}
           </div>
         )}

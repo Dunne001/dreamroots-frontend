@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import api from '../utils/api';
 
 export default function ServicesSection() {
@@ -14,74 +15,56 @@ export default function ServicesSection() {
   }, []);
 
   const icons = {
-    'graduation-cap': '🎓',
-    'laptop-code': '💻',
-    'chart-line': '📊',
-    'users': '👥',
-    'bullhorn': '📣',
-    'microscope': '🔬',
-    'handshake': '🤝',
-    'chalkboard-teacher': '📚',
+    'graduation-cap': '🎓', 'laptop-code': '💻', 'chart-line': '📊',
+    'users': '👥', 'bullhorn': '📣', 'microscope': '🔬',
+    'handshake': '🤝', 'chalkboard-teacher': '📚',
   };
 
-  if (loading) return (
-    <section style={{ padding: '60px 20px', textAlign: 'center' }}>
-      <p style={{ color: '#1B4F72' }}>Loading services...</p>
-    </section>
-  );
+  if (loading) return null;
 
   return (
-    <section style={{ padding: '60px 20px', backgroundColor: '#f8f9fa' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', color: '#1B4F72', fontSize: '2rem', marginBottom: '10px' }}>
-          Our Services
-        </h2>
-        <p style={{ textAlign: 'center', color: '#555', marginBottom: '40px' }}>
-          Comprehensive consulting solutions tailored for growth and impact
-        </p>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-          gap: '24px'
-        }}>
-          {services.map(service => (
-            <Link
+    <section className="py-24 bg-surface">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-serif text-navy mb-4">Core Expertise</h2>
+          <div className="w-20 h-1 bg-gold mx-auto mb-6" />
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto font-sans">
+            Comprehensive consulting solutions tailored to drive institutional excellence and sustainable impact.
+          </p>
+        </motion.div>
+
+        {/* Services Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <motion.div
               key={service.id}
-              to={`/services/${service.slug}`}
-              style={{ textDecoration: 'none' }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
             >
-              <div style={{
-                backgroundColor: '#fff',
-                borderRadius: '12px',
-                padding: '30px 24px',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                cursor: 'pointer',
-                height: '100%',
-              }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.12)';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.08)';
-                }}
+              <Link
+                to={`/services/${service.slug}`}
+                className="group block bg-light p-8 rounded-2xl border border-gray-100 transition-all duration-300 hover:shadow-premium hover:bg-white h-full"
               >
-                <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>
-                  {icons[service.icon] || '⭐'}
-                </div>
-                <h3 style={{ color: '#1B4F72', fontSize: '1.1rem', marginBottom: '10px' }}>
+                <div className="text-3xl mb-6">{icons[service.icon] || '⭐'}</div>
+                <h3 className="text-xl font-serif text-navy mb-3 group-hover:text-gold transition-colors">
                   {service.name}
                 </h3>
-                <p style={{ color: '#666', fontSize: '0.9rem', lineHeight: '1.6' }}>
+                <p className="text-gray-600 leading-relaxed mb-6 font-sans text-sm">
                   {service.summary}
                 </p>
-                <p style={{ color: '#2E86C1', fontSize: '0.9rem', marginTop: '16px', fontWeight: '600' }}>
-                  Learn More →
-                </p>
-              </div>
-            </Link>
+                <span className="inline-flex items-center text-sm font-semibold text-navy group-hover:text-gold transition-colors">
+                  Explore Service <span className="ml-2">→</span>
+                </span>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>
