@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -10,7 +10,9 @@ import 'swiper/css/effect-fade'
 import PageWrapper   from '../components/ui/PageWrapper'
 import SectionHeader from '../components/ui/SectionHeader'
 import BookingCTA    from '../components/ui/BookingCTA'
-import { HERO_SLIDES, SERVICES, BOARD, STATS, SITE } from '../data/site'
+import DynamicLucideIcon from '../components/ui/DynamicLucideIcon'
+import { HERO_SLIDES, STATS, SITE } from '../data/site'
+import api from '../utils/api'
 
 /* ─── Hero Slider ───────────────────────────────────────────── */
 function HeroSlider() {
@@ -216,8 +218,18 @@ function AboutTeaser() {
   )
 }
 
-/* ─── Services Grid ─────────────────────────────────────────── */
-function ServicesSection() {
+/* ─── Services Grid with Lucide Icons ──────────────────────── */
+function ServicesSection({ services }) {
+  if (!services || services.length === 0) {
+    return (
+      <section className="section" style={{ background: 'var(--clr-deep)' }}>
+        <div className="container" style={{ textAlign: 'center', padding: '4rem' }}>
+          Loading services...
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="section" style={{ background: 'var(--clr-deep)' }}>
       <div className="container">
@@ -228,7 +240,7 @@ function ServicesSection() {
         />
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '2px' }}>
-          {SERVICES.map((svc, i) => (
+          {services.map((svc, i) => (
             <motion.div
               key={svc.slug}
               initial={{ opacity: 0, y: 24 }}
@@ -260,9 +272,18 @@ function ServicesSection() {
                     e.currentTarget.querySelector('.svc-arrow').style.transform = 'translateX(-8px)'
                   }}
                 >
-                  <div style={{ fontSize: '1.4rem', color: 'var(--clr-gold)', marginBottom: '1.25rem', opacity: 0.7 }}>{svc.icon}</div>
+                  {/* Lucide Dynamic Icon */}
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <DynamicLucideIcon
+                      name={svc.icon}
+                      size={32}
+                      strokeWidth={1.5}
+                      color="var(--clr-gold)"
+                    />
+                  </div>
+
                   <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.3rem', fontWeight: 300, color: 'var(--clr-text)', marginBottom: '0.75rem' }}>
-                    {svc.title}
+                    {svc.name}
                   </h3>
                   <p style={{ color: 'var(--clr-text-muted)', fontSize: '0.83rem', lineHeight: 1.8, marginBottom: '1.5rem' }}>
                     {svc.summary}
@@ -300,7 +321,9 @@ function ServicesSection() {
 }
 
 /* ─── Board Preview ─────────────────────────────────────────── */
-function BoardPreview() {
+function BoardPreview({ board }) {
+  if (!board || board.length === 0) return null
+
   return (
     <section className="section" style={{ background: 'var(--clr-void)' }}>
       <div className="container">
@@ -311,7 +334,7 @@ function BoardPreview() {
         />
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2px', marginBottom: '3rem' }}>
-          {BOARD.map((member, i) => (
+          {board.map((member, i) => (
             <motion.div
               key={member.id}
               initial={{ opacity: 0, y: 24 }}
@@ -329,14 +352,15 @@ function BoardPreview() {
             >
               <div style={{ height: '240px', overflow: 'hidden', background: 'var(--clr-elevated)', position: 'relative' }}>
                 <img
-                  src={member.image} alt={member.name}
+                  src={member.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=1B4F72&color=fff`}
+                  alt={member.name}
                   style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', filter: 'grayscale(20%)' }}
                 />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, var(--clr-surface) 0%, transparent 55%)' }} />
               </div>
               <div style={{ padding: '1.5rem' }}>
                 <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 300, marginBottom: '0.25rem' }}>{member.name}</h3>
-                <p className="label gold" style={{ fontSize: '0.65rem', letterSpacing: '0.18em' }}>{member.title}</p>
+                <p className="label gold" style={{ fontSize: '0.65rem', letterSpacing: '0.18em' }}>{member.role}</p>
               </div>
             </motion.div>
           ))}
@@ -351,8 +375,21 @@ function BoardPreview() {
   )
 }
 
-/* ─── Page ──────────────────────────────────────────────────── */
+/* ─── Main Page ─────────────────────────────────────────────── */
 export default function Home() {
+  const [services, setServices] = useState([])
+  const [board, setBoard] = useState([])
+
+  useEffect(() => {
+    api.get('/services')
+      .then(res => setServices(res.data))
+      .catch(err => console.error('Services fetch error:', err))
+
+    api.get('/team/board')
+      .then(res => setBoard(res.data))
+      .catch(err => console.error('Board fetch error:', err))
+  }, [])
+
   return (
     <PageWrapper
       title={null}
@@ -361,10 +398,9 @@ export default function Home() {
       <HeroSlider />
       <StatsStrip />
       <AboutTeaser />
-      <ServicesSection />
-      <BoardPreview />
+      <ServicesSection services={services} />
+      <BoardPreview board={board} />
       <BookingCTA />
     </PageWrapper>
   )
 }
-
