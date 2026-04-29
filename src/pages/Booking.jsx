@@ -1,172 +1,321 @@
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import PageWrapper from '../components/ui/PageWrapper'
-import PageHero    from '../components/ui/PageHero'
-import { SERVICES, SITE } from '../data/site'
+import DynamicLucideIcon from '../components/ui/DynamicLucideIcon'
+import api from '../utils/api'
 
 export default function Booking() {
-  const [submitted, setSubmitted] = useState(false)
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    watch
+  } = useForm()
+  
+  const [services, setServices] = useState([])
+  const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' })
+  const selectedServiceId = watch('service_id')
+
+  useEffect(() => {
+    api.get('/services')
+      .then(res => setServices(res.data))
+      .catch(err => console.error('Failed to load services:', err))
+  }, [])
 
   const onSubmit = async (data) => {
-    await new Promise(r => setTimeout(r, 1200))
-    console.log('Booking:', data)
-    setSubmitted(true)
-    reset()
+    setSubmitStatus({ type: '', message: '' })
+    try {
+      await api.post('/booking', data)
+      setSubmitStatus({ type: 'success', message: '✓ Booking request submitted successfully! We will contact you within 24 hours.' })
+      reset()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } catch (error) {
+      console.error('Booking form error:', error)
+      setSubmitStatus({ type: 'error', message: '❌ Failed to submit booking. Please try again later.' })
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
+
+  const today = new Date().toISOString().split('T')[0]
+  const selectedService = services.find(s => s.id == selectedServiceId)
 
   const inputStyle = (hasError) => ({
     width: '100%',
-    background: 'var(--clr-elevated)',
-    border: `1px solid ${hasError ? 'rgba(220,80,80,0.5)' : 'var(--clr-border)'}`,
+    maxWidth: '100%',
+    boxSizing: 'border-box',
+    padding: '12px 16px',
+    borderRadius: '12px',
+    backgroundColor: 'var(--clr-void)',
+    border: `1.5px solid ${hasError ? '#dc3545' : 'var(--clr-border)'}`,
     color: 'var(--clr-text)',
-    fontFamily: 'var(--font-sans)',
-    fontSize: '0.88rem',
-    padding: '0.85rem 1.1rem',
-    outline: 'none',
-    transition: 'border-color 0.25s',
-    borderRadius: 0,
+    fontSize: '16px',
+    transition: 'all 0.2s ease',
+    outline: 'none'
   })
 
-  return (
-    <PageWrapper
-      title="Book a Consultation"
-      description="Book a consultation with DreamRoots Kenya. Select your service and preferred date."
-    >
-      <PageHero
-        label="Consultation"
-        title="Book a Session"
-        subtitle="Select your service area and preferred time. Our team will confirm your consultation within 24 hours."
-        breadcrumb={['Home', 'Booking']}
-      />
+  const selectStyle = (hasError) => ({
+    width: '100%',
+    maxWidth: '100%',
+    boxSizing: 'border-box',
+    padding: '12px 16px',
+    borderRadius: '12px',
+    backgroundColor: 'var(--clr-void)',
+    border: `1.5px solid ${hasError ? '#dc3545' : 'var(--clr-border)'}`,
+    color: 'var(--clr-text)',
+    fontSize: '16px',
+    cursor: 'pointer'
+  })
 
-      <section className="section" style={{ background: 'var(--clr-void)' }}>
-        <div className="container" style={{ maxWidth: '800px' }}>
-          {submitted ? (
+  const trustIndicators = [
+    { icon: 'Clock', text: '24hr Response Time', color: '#10b981' },
+    { icon: 'Headphones', text: 'Free Consultation', color: 'var(--clr-gold)' },
+    { icon: 'ShieldCheck', text: '100% Confidential', color: '#3b82f6' },
+    { icon: 'Users', text: 'Expert Team', color: '#8b5cf6' }
+  ]
+
+  const steps = [
+    { number: 1, title: 'Select Service', icon: 'Briefcase' },
+    { number: 2, title: 'Your Details', icon: 'User' },
+    { number: 3, title: 'Schedule', icon: 'Calendar' },
+    { number: 4, title: 'Confirm', icon: 'CheckCircle' }
+  ]
+
+  return (
+    <PageWrapper title="Book a Consultation | DreamRoots Kenya" description="Schedule a consultation with DreamRoots Kenya experts">
+      <div style={{
+        background: 'linear-gradient(135deg, var(--clr-deep) 0%, var(--clr-primary) 100%)',
+        padding: '60px 20px',
+        textAlign: 'center',
+        marginBottom: '48px'
+      }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <DynamicLucideIcon name="CalendarCheck" size={60} strokeWidth={1.5} color="var(--clr-gold)" style={{ marginBottom: '16px' }} />
+          <h1 style={{ fontSize: 'clamp(28px, 5vw, 48px)', marginBottom: '8px', color: 'white' }}>Book a Consultation</h1>
+          <p style={{ fontSize: 'clamp(14px, 4vw, 18px)', color: 'rgba(255,255,255,0.8)', maxWidth: '600px', margin: '0 auto' }}>
+            Take the first step toward transforming your organization
+          </p>
+        </motion.div>
+      </div>
+
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px 60px' }}>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '16px', marginBottom: '48px' }}>
+          {trustIndicators.map((item, idx) => (
             <motion.div
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              style={{
-                textAlign: 'center', padding: '5rem 2rem',
-                background: 'var(--clr-surface)',
-                border: '1px solid var(--clr-border-md)',
-              }}
-            >
-              <div style={{ fontSize: '3rem', color: 'var(--clr-gold)', marginBottom: '1.5rem' }}>◆</div>
-              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', fontWeight: 300, marginBottom: '1rem' }}>
-                Booking Received
-              </h2>
-              <p style={{ color: 'var(--clr-text-muted)', maxWidth: '440px', margin: '0 auto 2rem', lineHeight: 1.8 }}>
-                Thank you for booking with DreamRoots Kenya. A representative will contact you within 24 hours to confirm your consultation.
-              </p>
-              <p style={{ color: 'var(--clr-text-faint)', fontSize: '0.8rem', marginBottom: '2rem' }}>
-                For urgent enquiries: <a href={`tel:${SITE.phone}`} style={{ color: 'var(--clr-gold)', textDecoration: 'none' }}>{SITE.phone}</a>
-              </p>
-              <button onClick={() => setSubmitted(false)} className="btn-gold"><span>Book Another</span></button>
-            </motion.div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
+              transition={{ delay: idx * 0.1 }}
               style={{
                 background: 'var(--clr-surface)',
+                borderRadius: '16px',
+                padding: '16px',
+                textAlign: 'center',
                 border: '1px solid var(--clr-border)',
-                padding: 'clamp(2.5rem, 5vw, 4rem)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2.5rem' }}>
-                <span className="gold-line" />
-                <span className="label gold">Consultation Request</span>
+              <DynamicLucideIcon name={item.icon} size={28} strokeWidth={1.5} color={item.color} style={{ marginBottom: '8px' }} />
+              <p style={{ fontWeight: '600', margin: 0, fontSize: '14px' }}>{item.text}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '48px', flexWrap: 'wrap', gap: '16px' }}>
+          {steps.map((step, idx) => (
+            <div key={idx} style={{ flex: 1, minWidth: '80px', textAlign: 'center' }}>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                background: 'var(--clr-gold)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 8px',
+                color: '#1B4F72',
+                fontWeight: 'bold',
+                fontSize: '20px'
+              }}>
+                {step.number}
+              </div>
+              <p style={{ fontSize: '12px', margin: 0, color: 'var(--clr-text-muted)' }}>{step.title}</p>
+            </div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          style={{
+            background: 'var(--clr-surface)',
+            borderRadius: '24px',
+            padding: '32px',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+            border: '1px solid var(--clr-border)',
+            overflow: 'hidden'
+          }}
+        >
+          {submitStatus.message && (
+            <div style={{
+              padding: '16px',
+              marginBottom: '24px',
+              borderRadius: '12px',
+              backgroundColor: submitStatus.type === 'success' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(220, 53, 69, 0.1)',
+              color: submitStatus.type === 'success' ? '#10b981' : '#dc3545',
+              border: `1px solid ${submitStatus.type === 'success' ? '#10b981' : '#dc3545'}`,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              flexWrap: 'wrap'
+            }}>
+              <DynamicLucideIcon name={submitStatus.type === 'success' ? 'CheckCircle' : 'AlertCircle'} size={20} />
+              <span>{submitStatus.message}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            
+            <div style={{
+              background: 'rgba(26, 45, 80, 0.5)',
+              borderRadius: '16px',
+              padding: '24px',
+              overflow: 'hidden'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
+                <DynamicLucideIcon name="Briefcase" size={20} color="var(--clr-gold)" />
+                <label style={{ fontWeight: '600' }}>Select Your Service *</label>
+              </div>
+              <select
+                {...register('service_id', { required: 'Please select a service' })}
+                style={selectStyle(!!errors.service_id)}
+              >
+                <option value="">Choose a service...</option>
+                {services.map(service => (
+                  <option key={service.id} value={service.id}>{service.name}</option>
+                ))}
+              </select>
+              {errors.service_id && <p style={{ color: '#dc3545', fontSize: '14px', marginTop: '8px' }}>{errors.service_id.message}</p>}
+              
+              {selectedService && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  style={{ marginTop: '16px', padding: '16px', background: 'var(--clr-void)', borderRadius: '12px', borderLeft: `3px solid var(--clr-gold)` }}
+                >
+                  <p style={{ margin: 0, fontSize: '14px', color: 'var(--clr-text-muted)' }}>{selectedService.summary}</p>
+                </motion.div>
+              )}
+            </div>
+
+            <div style={{
+              background: 'rgba(26, 45, 80, 0.5)',
+              borderRadius: '16px',
+              padding: '24px',
+              overflow: 'hidden'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                <DynamicLucideIcon name="User" size={20} color="var(--clr-gold)" />
+                <h3 style={{ margin: 0, fontSize: '18px' }}>Your Information</h3>
               </div>
 
-              <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                {/* Personal info row */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
-                  {[
-                    { name: 'firstName', label: 'First Name', required: true },
-                    { name: 'lastName', label: 'Last Name', required: true },
-                  ].map(f => (
-                    <div key={f.name}>
-                      <label style={{ display: 'block', color: 'var(--clr-text-muted)', fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>{f.label}</label>
-                      <input {...register(f.name, { required: `${f.label} required` })} type="text" style={inputStyle(errors[f.name])}
-                        onFocus={e => e.target.style.borderColor = 'var(--clr-gold)'}
-                        onBlur={e => e.target.style.borderColor = errors[f.name] ? 'rgba(220,80,80,0.5)' : 'var(--clr-border)'}
-                      />
-                      {errors[f.name] && <p style={{ color: 'rgba(220,120,80,0.9)', fontSize: '0.72rem', marginTop: '0.3rem' }}>{errors[f.name].message}</p>}
-                    </div>
-                  ))}
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
-                  {[
-                    { name: 'email', label: 'Email Address', type: 'email' },
-                    { name: 'phone', label: 'Phone Number', type: 'tel' },
-                  ].map(f => (
-                    <div key={f.name}>
-                      <label style={{ display: 'block', color: 'var(--clr-text-muted)', fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>{f.label}</label>
-                      <input {...register(f.name, { required: `${f.label} required` })} type={f.type || 'text'} style={inputStyle(errors[f.name])}
-                        onFocus={e => e.target.style.borderColor = 'var(--clr-gold)'}
-                        onBlur={e => e.target.style.borderColor = 'var(--clr-border)'}
-                      />
-                      {errors[f.name] && <p style={{ color: 'rgba(220,120,80,0.9)', fontSize: '0.72rem', marginTop: '0.3rem' }}>{errors[f.name].message}</p>}
-                    </div>
-                  ))}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600' }}>Full Name <span style={{ color: '#dc3545' }}>*</span></label>
+                  <input type="text" placeholder="John Doe" {...register('name', { required: 'Name is required', minLength: { value: 2, message: 'Name must be at least 2 characters' }, pattern: { value: /^[A-Za-z\s]+$/, message: 'Name can only contain letters and spaces' } })} style={inputStyle(!!errors.name)} />
+                  {errors.name && <p style={{ color: '#dc3545', fontSize: '14px', marginTop: '8px' }}>{errors.name.message}</p>}
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', color: 'var(--clr-text-muted)', fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>Organization</label>
-                  <input {...register('organization')} type="text" style={inputStyle(false)}
-                    onFocus={e => e.target.style.borderColor = 'var(--clr-gold)'}
-                    onBlur={e => e.target.style.borderColor = 'var(--clr-border)'}
-                  />
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600' }}>Email Address <span style={{ color: '#dc3545' }}>*</span></label>
+                  <input type="email" placeholder="john@example.com" {...register('email', { required: 'Email is required', pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'Enter a valid email address' } })} style={inputStyle(!!errors.email)} />
+                  {errors.email && <p style={{ color: '#dc3545', fontSize: '14px', marginTop: '8px' }}>{errors.email.message}</p>}
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', color: 'var(--clr-text-muted)', fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>Service Area</label>
-                  <select {...register('service', { required: 'Please select a service' })}
-                    style={{ ...inputStyle(errors.service), cursor: 'pointer' }}
-                    onFocus={e => e.target.style.borderColor = 'var(--clr-gold)'}
-                    onBlur={e => e.target.style.borderColor = 'var(--clr-border)'}
-                    defaultValue=""
-                  >
-                    <option value="" disabled style={{ background: 'var(--clr-elevated)' }}>Select a service…</option>
-                    {SERVICES.map(s => (
-                      <option key={s.slug} value={s.slug} style={{ background: 'var(--clr-elevated)' }}>{s.title}</option>
-                    ))}
-                    <option value="general" style={{ background: 'var(--clr-elevated)' }}>General Inquiry</option>
-                  </select>
-                  {errors.service && <p style={{ color: 'rgba(220,120,80,0.9)', fontSize: '0.72rem', marginTop: '0.3rem' }}>{errors.service.message}</p>}
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600' }}>Phone Number <span style={{ color: '#dc3545' }}>*</span></label>
+                  <input type="tel" placeholder="0712345678" {...register('phone', { required: 'Phone number is required', pattern: { value: /^(?:\+254|0)(7|1)\d{8}$/, message: 'Enter a valid Kenyan phone number' } })} style={inputStyle(!!errors.phone)} />
+                  {errors.phone && <p style={{ color: '#dc3545', fontSize: '14px', marginTop: '8px' }}>{errors.phone.message}</p>}
                 </div>
+              </div>
+            </div>
 
-                <div>
-                  <label style={{ display: 'block', color: 'var(--clr-text-muted)', fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>Preferred Date</label>
-                  <input {...register('date')} type="date" style={{ ...inputStyle(false), colorScheme: 'dark' }}
-                    onFocus={e => e.target.style.borderColor = 'var(--clr-gold)'}
-                    onBlur={e => e.target.style.borderColor = 'var(--clr-border)'}
-                  />
-                </div>
+            <div style={{
+              background: 'rgba(26, 45, 80, 0.5)',
+              borderRadius: '16px',
+              padding: '24px',
+              overflow: 'hidden'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                <DynamicLucideIcon name="Calendar" size={20} color="var(--clr-gold)" />
+                <h3 style={{ margin: 0, fontSize: '18px' }}>Schedule Your Consultation</h3>
+              </div>
 
-                <div>
-                  <label style={{ display: 'block', color: 'var(--clr-text-muted)', fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>Additional Notes</label>
-                  <textarea {...register('notes')} rows={4}
-                    style={{ ...inputStyle(false), resize: 'vertical', minHeight: '100px' }}
-                    onFocus={e => e.target.style.borderColor = 'var(--clr-gold)'}
-                    onBlur={e => e.target.style.borderColor = 'var(--clr-border)'}
-                    placeholder="Briefly describe your organization and what you're looking to achieve…"
-                  />
-                </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600' }}>Preferred Date <span style={{ color: '#dc3545' }}>*</span></label>
+                <input type="date" {...register('preferred_date', { required: 'Preferred date is required', validate: value => value >= today || 'Preferred date must be today or a future date' })} min={today} style={inputStyle(!!errors.preferred_date)} />
+                {errors.preferred_date && <p style={{ color: '#dc3545', fontSize: '14px', marginTop: '8px' }}>{errors.preferred_date.message}</p>}
+                <p style={{ fontSize: '12px', color: 'var(--clr-text-muted)', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '4px', flexWrap: 'wrap' }}>
+                  <DynamicLucideIcon name="Clock" size={12} />
+                  We'll contact you within 24 hours to confirm the exact time
+                </p>
+              </div>
+            </div>
 
-                <button type="submit" className="btn-gold" disabled={isSubmitting} style={{ justifyContent: 'center', padding: '1rem 2rem', opacity: isSubmitting ? 0.7 : 1 }}>
-                  <span>{isSubmitting ? 'Submitting…' : 'Request Consultation'}</span>
-                </button>
-              </form>
-            </motion.div>
-          )}
-        </div>
-      </section>
+            <div style={{
+              background: 'rgba(26, 45, 80, 0.5)',
+              borderRadius: '16px',
+              padding: '24px',
+              overflow: 'hidden'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
+                <DynamicLucideIcon name="MessageSquare" size={20} color="var(--clr-gold)" />
+                <label style={{ fontWeight: '600' }}>Additional Information</label>
+              </div>
+              <textarea rows="4" {...register('message')} placeholder="Tell us more about your needs, questions, goals, or any specific requirements..." style={inputStyle(false)} />
+            </div>
+
+            <motion.button
+              type="submit"
+              disabled={isSubmitting}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                width: '100%',
+                padding: '16px 32px',
+                background: 'linear-gradient(135deg, var(--clr-gold) 0%, #e6c200 100%)',
+                color: '#1B4F72',
+                border: 'none',
+                borderRadius: '40px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                opacity: isSubmitting ? 0.7 : 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+            >
+              <DynamicLucideIcon name={isSubmitting ? 'Loader' : 'Send'} size={18} />
+              {isSubmitting ? 'Submitting...' : 'Submit Booking Request'}
+            </motion.button>
+          </form>
+        </motion.div>
+
+        <p style={{
+          textAlign: 'center',
+          marginTop: '32px',
+          fontSize: '14px',
+          color: 'var(--clr-text-muted)'
+        }}>
+          <DynamicLucideIcon name="Lock" size={14} style={{ display: 'inline', marginRight: '4px' }} />
+          Your information is secure and will only be used to respond to your inquiry
+        </p>
+      </div>
     </PageWrapper>
   )
 }
-

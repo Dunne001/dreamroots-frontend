@@ -5,175 +5,85 @@ import BookingCTA from '../components/ui/BookingCTA'
 import DynamicLucideIcon from '../components/ui/DynamicLucideIcon'
 import api from '../utils/api'
 
-// ------------------------------------------------------------
-// Unique theme per service (slug → theme)
-// Each icon now has its own animation type: 'rotate', 'zoom', 'pulse', 'radial'
-// ------------------------------------------------------------
-const serviceThemes = {
-  'ict': {
-    gradient: 'linear-gradient(135deg, #0F2027, #203A43, #2C5364)',
-    icons: [
-      { name: 'Laptop', type: 'rotate', duration: 12, baseSize: 60 },
-      { name: 'Cloud', type: 'zoom', duration: 10, baseSize: 70 },
-      { name: 'Code2', type: 'pulse', duration: 8, baseSize: 50 },
-      { name: 'Shield', type: 'rotate', duration: 15, baseSize: 55 },
-      { name: 'Database', type: 'radial', duration: 18, baseSize: 65 },
-      { name: 'Cpu', type: 'zoom', duration: 9, baseSize: 60 },
-      { name: 'Wifi', type: 'pulse', duration: 7, baseSize: 50 },
-      { name: 'Server', type: 'radial', duration: 20, baseSize: 70 },
-    ],
-    particleCount: 30,
-    particleColor: 'rgba(0, 255, 255, 0.08)',
-  },
-  'finance': {
-    gradient: 'linear-gradient(135deg, #1A2980, #26D0CE)',
-    icons: [
-      { name: 'LineChart', type: 'zoom', duration: 11, baseSize: 65 },
-      { name: 'Coins', type: 'rotate', duration: 13, baseSize: 55 },
-      { name: 'PiggyBank', type: 'pulse', duration: 9, baseSize: 60 },
-      { name: 'TrendingUp', type: 'radial', duration: 16, baseSize: 50 },
-      { name: 'BarChart', type: 'rotate', duration: 14, baseSize: 60 },
-      { name: 'Wallet', type: 'zoom', duration: 10, baseSize: 55 },
-      { name: 'DollarSign', type: 'pulse', duration: 8, baseSize: 45 },
-    ],
-    particleCount: 25,
-    particleColor: 'rgba(255, 215, 0, 0.08)',
-  },
-  'education-consultancy': {
-    gradient: 'linear-gradient(135deg, #2b1b3e, #44318d)',
-    icons: [
-      { name: 'GraduationCap', type: 'rotate', duration: 12, baseSize: 60 },
-      { name: 'BookOpen', type: 'zoom', duration: 10, baseSize: 55 },
-      { name: 'School', type: 'pulse', duration: 8, baseSize: 65 },
-      { name: 'Users', type: 'radial', duration: 15, baseSize: 60 },
-      { name: 'Lightbulb', type: 'rotate', duration: 11, baseSize: 50 },
-      { name: 'ClipboardList', type: 'zoom', duration: 9, baseSize: 55 },
-    ],
-    particleCount: 20,
-    particleColor: 'rgba(255, 255, 255, 0.08)',
-  },
-  'human-resource-management': {
-    gradient: 'linear-gradient(135deg, #304352, #d7d2cc)',
-    icons: [
-      { name: 'Users', type: 'radial', duration: 14, baseSize: 65 },
-      { name: 'Briefcase', type: 'rotate', duration: 12, baseSize: 60 },
-      { name: 'Handshake', type: 'zoom', duration: 10, baseSize: 55 },
-      { name: 'BadgeCheck', type: 'pulse', duration: 8, baseSize: 50 },
-      { name: 'UserCog', type: 'rotate', duration: 13, baseSize: 60 },
-      { name: 'Building', type: 'zoom', duration: 9, baseSize: 70 },
-    ],
-    particleCount: 18,
-    particleColor: 'rgba(255, 215, 0, 0.06)',
-  },
-  'marketing': {
-    gradient: 'linear-gradient(135deg, #c21500, #ffc500)',
-    icons: [
-      { name: 'Megaphone', type: 'pulse', duration: 7, baseSize: 60 },
-      { name: 'BarChart', type: 'zoom', duration: 11, baseSize: 55 },
-      { name: 'Share2', type: 'rotate', duration: 9, baseSize: 50 },
-      { name: 'Target', type: 'radial', duration: 15, baseSize: 65 },
-      { name: 'Mail', type: 'zoom', duration: 10, baseSize: 55 },
-      { name: 'TrendingUp', type: 'rotate', duration: 12, baseSize: 60 },
-      { name: 'Globe', type: 'pulse', duration: 8, baseSize: 70 },
-    ],
-    particleCount: 28,
-    particleColor: 'rgba(255, 100, 0, 0.1)',
-  },
-  'research': {
-    gradient: 'linear-gradient(135deg, #1D976C, #93F9B9)',
-    icons: [
-      { name: 'Microscope', type: 'zoom', duration: 14, baseSize: 60 },
-      { name: 'FlaskConical', type: 'rotate', duration: 12, baseSize: 55 },
-      { name: 'ClipboardCheck', type: 'pulse', duration: 9, baseSize: 50 },
-      { name: 'Search', type: 'radial', duration: 16, baseSize: 65 },
-      { name: 'FileSearch', type: 'zoom', duration: 10, baseSize: 55 },
-      { name: 'LineChart', type: 'rotate', duration: 11, baseSize: 60 },
-      { name: 'Dna', type: 'pulse', duration: 8, baseSize: 70 },
-    ],
-    particleCount: 22,
-    particleColor: 'rgba(255, 255, 255, 0.1)',
-  },
-  'soft-skills-training': {
-    gradient: 'linear-gradient(135deg, #4B79A1, #283E51)',
-    icons: [
-      { name: 'Handshake', type: 'zoom', duration: 11, baseSize: 60 },
-      { name: 'MessageSquare', type: 'rotate', duration: 13, baseSize: 55 },
-      { name: 'Users', type: 'radial', duration: 14, baseSize: 65 },
-      { name: 'Star', type: 'pulse', duration: 7, baseSize: 50 },
-      { name: 'UserCheck', type: 'zoom', duration: 9, baseSize: 55 },
-      { name: 'HeartHandshake', type: 'rotate', duration: 12, baseSize: 60 },
-    ],
-    particleCount: 24,
-    particleColor: 'rgba(255, 215, 0, 0.07)',
-  },
-  'training-capacity-building': {
-    gradient: 'linear-gradient(135deg, #0B3B3B, #1C7C6B)',
-    icons: [
-      { name: 'School', type: 'zoom', duration: 12, baseSize: 65 },
-      { name: 'ClipboardList', type: 'rotate', duration: 10, baseSize: 60 },
-      { name: 'Users', type: 'radial', duration: 15, baseSize: 70 },
-      { name: 'Presentation', type: 'pulse', duration: 9, baseSize: 55 },
-      { name: 'BarChart', type: 'zoom', duration: 11, baseSize: 60 },
-      { name: 'Target', type: 'rotate', duration: 13, baseSize: 50 },
-      { name: 'Trophy', type: 'pulse', duration: 8, baseSize: 65 },
-    ],
-    particleCount: 26,
-    particleColor: 'rgba(0, 255, 200, 0.08)',
-  },
+// Unique gradient per service (based on slug)
+function getServiceGradient(slug) {
+  const gradients = {
+    'ict': 'linear-gradient(135deg, #0F2027, #203A43, #2C5364)',
+    'finance': 'linear-gradient(135deg, #1A2980, #26D0CE)',
+    'education-consultancy': 'linear-gradient(135deg, #2b1b3e, #44318d)',
+    'human-resource-management': 'linear-gradient(135deg, #304352, #d7d2cc)',
+    'marketing': 'linear-gradient(135deg, #c21500, #ffc500)',
+    'research': 'linear-gradient(135deg, #1D976C, #93F9B9)',
+    'soft-skills-training': 'linear-gradient(135deg, #4B79A1, #283E51)',
+    'training-capacity-building': 'linear-gradient(135deg, #0B3B3B, #1C7C6B)'
+  }
+  return gradients[slug] || 'linear-gradient(135deg, #1B4F72, #117A65)'
 }
 
-const defaultTheme = {
-  gradient: 'linear-gradient(135deg, #1B4F72, #117A65)',
-  icons: [
-    { name: 'Settings', type: 'pulse', duration: 10, baseSize: 50 },
-    { name: 'HelpCircle', type: 'rotate', duration: 12, baseSize: 55 },
-    { name: 'Zap', type: 'zoom', duration: 9, baseSize: 60 },
-  ],
-  particleCount: 20,
-  particleColor: 'rgba(255, 215, 0, 0.08)',
+// Per-service icon themes (with animation types)
+function getServiceIcons(slug) {
+  const themes = {
+    'ict': [
+      { name: 'Laptop', type: 'rotate', duration: 12, size: 60 },
+      { name: 'Cloud', type: 'zoom', duration: 10, size: 70 },
+      { name: 'Code2', type: 'pulse', duration: 8, size: 50 },
+      { name: 'Shield', type: 'rotate', duration: 15, size: 55 },
+      { name: 'Database', type: 'radial', duration: 18, size: 65 },
+      { name: 'Cpu', type: 'zoom', duration: 9, size: 60 },
+    ],
+    'finance': [
+      { name: 'LineChart', type: 'zoom', duration: 11, size: 65 },
+      { name: 'Coins', type: 'rotate', duration: 13, size: 55 },
+      { name: 'PiggyBank', type: 'pulse', duration: 9, size: 60 },
+      { name: 'TrendingUp', type: 'radial', duration: 16, size: 50 },
+      { name: 'BarChart', type: 'rotate', duration: 14, size: 60 },
+      { name: 'Wallet', type: 'zoom', duration: 10, size: 55 },
+    ],
+    'education-consultancy': [
+      { name: 'GraduationCap', type: 'rotate', duration: 12, size: 60 },
+      { name: 'BookOpen', type: 'zoom', duration: 10, size: 55 },
+      { name: 'School', type: 'pulse', duration: 8, size: 65 },
+      { name: 'Users', type: 'radial', duration: 15, size: 60 },
+      { name: 'Lightbulb', type: 'rotate', duration: 11, size: 50 },
+    ],
+    'human-resource-management': [
+      { name: 'Users', type: 'radial', duration: 14, size: 65 },
+      { name: 'Briefcase', type: 'rotate', duration: 12, size: 60 },
+      { name: 'Handshake', type: 'zoom', duration: 10, size: 55 },
+      { name: 'BadgeCheck', type: 'pulse', duration: 8, size: 50 },
+      { name: 'Building', type: 'zoom', duration: 9, size: 70 },
+    ],
+    'marketing': [
+      { name: 'Megaphone', type: 'pulse', duration: 7, size: 60 },
+      { name: 'BarChart', type: 'zoom', duration: 11, size: 55 },
+      { name: 'Share2', type: 'rotate', duration: 9, size: 50 },
+      { name: 'Target', type: 'radial', duration: 15, size: 65 },
+      { name: 'Globe', type: 'pulse', duration: 8, size: 70 },
+    ],
+    'research': [
+      { name: 'Microscope', type: 'zoom', duration: 14, size: 60 },
+      { name: 'FlaskConical', type: 'rotate', duration: 12, size: 55 },
+      { name: 'ClipboardCheck', type: 'pulse', duration: 9, size: 50 },
+      { name: 'Search', type: 'radial', duration: 16, size: 65 },
+      { name: 'Dna', type: 'pulse', duration: 8, size: 70 },
+    ],
+    'soft-skills-training': [
+      { name: 'Handshake', type: 'zoom', duration: 11, size: 60 },
+      { name: 'MessageSquare', type: 'rotate', duration: 13, size: 55 },
+      { name: 'Star', type: 'pulse', duration: 7, size: 50 },
+      { name: 'HeartHandshake', type: 'rotate', duration: 12, size: 60 },
+    ],
+    'training-capacity-building': [
+      { name: 'School', type: 'zoom', duration: 12, size: 65 },
+      { name: 'ClipboardList', type: 'rotate', duration: 10, size: 60 },
+      { name: 'Presentation', type: 'pulse', duration: 9, size: 55 },
+      { name: 'Trophy', type: 'pulse', duration: 8, size: 65 },
+    ],
+  }
+  return themes[slug] || themes['ict']
 }
 
-function getServiceTheme(slug) {
-  return serviceThemes[slug] || defaultTheme
-}
-
-// ------------------------------------------------------------
-// Animation keyframes (added globally once in the component)
-// ------------------------------------------------------------
-const animationStyles = `
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  @keyframes floatParticle {
-    0% { transform: translateY(0px) translateX(0px); }
-    100% { transform: translateY(-50px) translateX(25px); }
-  }
-  @keyframes iconRotate {
-    0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-    100% { transform: translateY(-40px) translateX(30px) rotate(360deg); }
-  }
-  @keyframes iconZoom {
-    0% { transform: translateY(0px) scale(1); opacity: 0.2; }
-    50% { transform: translateY(-20px) scale(1.3); opacity: 0.4; }
-    100% { transform: translateY(-60px) scale(0.8); opacity: 0.15; }
-  }
-  @keyframes iconPulse {
-    0% { transform: scale(1); opacity: 0.1; text-shadow: 0 0 0px gold; }
-    50% { transform: scale(1.2); opacity: 0.3; text-shadow: 0 0 15px gold; }
-    100% { transform: scale(1); opacity: 0.1; text-shadow: 0 0 0px gold; }
-  }
-  @keyframes iconRadial {
-    0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
-    20% { opacity: 0.25; }
-    100% { transform: translate(calc(var(--dx, 100px)), calc(var(--dy, -80px))) scale(1); opacity: 0.12; }
-  }
-`
-
-// ------------------------------------------------------------
-// Subcategory marquee (same as before)
-// ------------------------------------------------------------
+// Horizontal marquee with center highlighting
 function SubcategoryMarquee({ subcategories }) {
   const containerRef = useRef(null)
   const wrapperRef = useRef(null)
@@ -190,6 +100,7 @@ function SubcategoryMarquee({ subcategories }) {
 
   useEffect(() => {
     if (!items.length || !containerRef.current || !wrapperRef.current) return
+
     const animate = () => {
       let newOffset = scrollOffset - speed
       const wrapperWidth = wrapperRef.current.scrollWidth
@@ -226,20 +137,24 @@ function SubcategoryMarquee({ subcategories }) {
     <div
       ref={containerRef}
       style={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 2,
+        width: '100%',
         overflow: 'hidden',
-        background: 'rgba(0,0,0,0.4)',
+        background: 'rgba(0,0,0,0.3)',
         backdropFilter: 'blur(8px)',
         borderTop: '1px solid rgba(255,215,0,0.3)',
-        padding: '0.75rem 0',
+        borderBottom: '1px solid rgba(255,215,0,0.3)',
+        padding: '1rem 0',
         whiteSpace: 'nowrap',
       }}
     >
-      <div ref={wrapperRef} style={{ display: 'inline-flex', gap: '2rem', willChange: 'transform' }}>
+      <div
+        ref={wrapperRef}
+        style={{
+          display: 'inline-flex',
+          gap: '2rem',
+          willChange: 'transform',
+        }}
+      >
         {items.map((item, idx) => {
           const isCentered = (idx % subcategories.length) === centerIndex
           return (
@@ -247,13 +162,13 @@ function SubcategoryMarquee({ subcategories }) {
               key={idx}
               style={{
                 display: 'inline-block',
-                padding: '0.4rem 1.2rem',
-                fontSize: isCentered ? '1.1rem' : '0.85rem',
+                padding: '0.5rem 1.5rem',
+                fontSize: isCentered ? '1.1rem' : '0.9rem',
                 fontWeight: isCentered ? 'bold' : 'normal',
                 background: isCentered ? 'rgba(255,215,0,0.25)' : 'transparent',
-                borderRadius: '60px',
-                border: isCentered ? '1px solid rgba(255,215,0,0.8)' : '1px solid rgba(255,215,0,0.2)',
-                color: isCentered ? '#FFD700' : 'rgba(255,255,255,0.8)',
+                borderRadius: '40px',
+                border: isCentered ? '1px solid rgba(255,215,0,0.8)' : '1px solid rgba(255,215,0,0.3)',
+                color: isCentered ? '#FFD700' : 'rgba(255,255,255,0.9)',
                 transition: 'all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1)',
                 transform: isCentered ? 'scale(1.05)' : 'scale(1)',
                 boxShadow: isCentered ? '0 0 12px rgba(255,215,0,0.4)' : 'none',
@@ -268,131 +183,121 @@ function SubcategoryMarquee({ subcategories }) {
   )
 }
 
-// ------------------------------------------------------------
-// ServiceHero with per‑icon animations
-// ------------------------------------------------------------
 function ServiceHero({ service }) {
   const subcategories = service.sections?.map(s => s.title) || []
-  const theme = getServiceTheme(service.slug)
+  const gradient = getServiceGradient(service.slug)
+  const icons = getServiceIcons(service.slug)
 
-  // Generate floating particles
-  const particles = Array.from({ length: theme.particleCount }).map(() => ({
-    width: Math.random() * 80 + 20,
-    height: Math.random() * 80 + 20,
-    top: Math.random() * 100 + '%',
-    left: Math.random() * 100 + '%',
-    background: theme.particleColor,
-    duration: Math.random() * 12 + 8,
-    delay: Math.random() * 8,
+  // Prepare icons with random positions
+  const preparedIcons = icons.map(icon => ({
+    ...icon,
+    top: Math.random() * 70 + 15,
+    left: Math.random() * 70 + 15,
+    delay: Math.random() * 5,
+    dx: (Math.random() - 0.5) * 200,
+    dy: (Math.random() - 0.5) * 150 - 50,
   }))
 
-  // Prepare icons with random positions and animation parameters
-  const preparedIcons = theme.icons.map(icon => {
-    const top = Math.random() * 80 + 10   // percentage
-    const left = Math.random() * 80 + 10
-    const delay = Math.random() * 5
-    // For radial icons, we also need direction vectors
-    const dx = (Math.random() - 0.5) * 200
-    const dy = (Math.random() - 0.5) * 150 - 50
-    return { ...icon, top, left, delay, dx, dy }
-  })
+  const animationStyles = `
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes floatParticle {
+      0% { transform: translateY(0px) translateX(0px); }
+      100% { transform: translateY(-50px) translateX(25px); }
+    }
+    @keyframes iconRotate {
+      0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+      100% { transform: translateY(-40px) translateX(30px) rotate(360deg); }
+    }
+    @keyframes iconZoom {
+      0% { transform: translateY(0px) scale(1); opacity: 0.2; }
+      50% { transform: translateY(-20px) scale(1.3); opacity: 0.4; }
+      100% { transform: translateY(-60px) scale(0.8); opacity: 0.15; }
+    }
+    @keyframes iconPulse {
+      0% { transform: scale(1); opacity: 0.1; }
+      50% { transform: scale(1.2); opacity: 0.3; }
+      100% { transform: scale(1); opacity: 0.1; }
+    }
+    @keyframes iconRadial {
+      0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+      20% { opacity: 0.25; }
+      100% { transform: translate(calc(var(--dx, 100px)), calc(var(--dy, -80px))) scale(1); opacity: 0.12; }
+    }
+  `
 
   return (
-    <div style={{ position: 'relative', height: '60vh', minHeight: '500px', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
       <style>{animationStyles}</style>
 
-      {/* Animated gradient */}
+      {/* Animated gradient background */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          background: theme.gradient,
+          background: gradient,
           backgroundSize: '200% 200%',
           animation: 'gradientShift 12s ease infinite',
+          zIndex: 0,
         }}
       />
 
-      {/* Floating blurred particles */}
-      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-        {particles.map((p, i) => (
+      {/* Floating particles */}
+      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+        {[...Array(20)].map((_, i) => (
           <div
             key={i}
             style={{
               position: 'absolute',
-              width: p.width,
-              height: p.height,
-              top: p.top,
-              left: p.left,
-              background: p.background,
+              width: Math.random() * 80 + 20,
+              height: Math.random() * 80 + 20,
+              top: Math.random() * 100 + '%',
+              left: Math.random() * 100 + '%',
+              background: 'rgba(255,215,0,0.1)',
               borderRadius: '50%',
               filter: 'blur(8px)',
-              animation: `floatParticle ${p.duration}s infinite alternate`,
-              animationDelay: `${p.delay}s`,
+              animation: `floatParticle ${Math.random() * 10 + 8}s infinite alternate`,
+              animationDelay: Math.random() * 5 + 's',
             }}
           />
         ))}
       </div>
 
-      {/* Floating icons with diverse behaviors */}
-      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+      {/* Floating service-specific icons with different animations */}
+      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         {preparedIcons.map((icon, idx) => {
-          let animationName, extraStyle = {}
+          let animationName
           switch (icon.type) {
-            case 'rotate':
-              animationName = 'iconRotate'
-              break
-            case 'zoom':
-              animationName = 'iconZoom'
-              break
-            case 'pulse':
-              animationName = 'iconPulse'
-              break
-            case 'radial':
-              animationName = 'iconRadial'
-              // Use CSS custom properties for direction
-              extraStyle = { '--dx': `${icon.dx}px`, '--dy': `${icon.dy}px` }
-              // For radial, initial position is center of the hero, not the random top/left
-              // We'll hardcode center for radial type
-              if (icon.type === 'radial') {
-                extraStyle.position = 'absolute'
-                extraStyle.top = '50%'
-                extraStyle.left = '50%'
-                extraStyle.transform = 'translate(-50%, -50%)'
-              } else {
-                extraStyle.top = `${icon.top}%`
-                extraStyle.left = `${icon.left}%`
-              }
-              break
-            default:
-              animationName = 'iconRotate'
+            case 'rotate': animationName = 'iconRotate'; break
+            case 'zoom': animationName = 'iconZoom'; break
+            case 'pulse': animationName = 'iconPulse'; break
+            case 'radial': animationName = 'iconRadial'; break
+            default: animationName = 'iconRotate'
           }
-          // For non-radial icons, we set top/left normally
-          const positionStyle = (icon.type !== 'radial') ? { top: `${icon.top}%`, left: `${icon.left}%` } : {}
-
+          const isRadial = icon.type === 'radial'
           return (
             <div
               key={idx}
               style={{
                 position: 'absolute',
-                ...positionStyle,
-                ...extraStyle,
-                opacity: icon.type === 'radial' ? 0 : 0.15,
+                ...(isRadial ? { top: '50%', left: '50%' } : { top: `${icon.top}%`, left: `${icon.left}%` }),
+                '--dx': `${icon.dx}px`,
+                '--dy': `${icon.dy}px`,
+                opacity: isRadial ? 0 : 0.15,
                 animation: `${animationName} ${icon.duration}s infinite alternate ease-in-out`,
                 animationDelay: `${icon.delay}s`,
               }}
             >
-              <DynamicLucideIcon
-                name={icon.name}
-                size={icon.baseSize}
-                strokeWidth={1}
-                color="white"
-              />
+              <DynamicLucideIcon name={icon.name} size={icon.size} strokeWidth={1} color="white" />
             </div>
           )
         })}
       </div>
 
-      {/* Dark overlay for text readability */}
+      {/* Dark overlay */}
       <div
         style={{
           position: 'absolute',
@@ -402,7 +307,7 @@ function ServiceHero({ service }) {
         }}
       />
 
-      {/* Foreground content */}
+      {/* Centered content */}
       <div
         style={{
           position: 'relative',
@@ -415,25 +320,27 @@ function ServiceHero({ service }) {
           textAlign: 'center',
           color: 'white',
           padding: '0 1rem',
-          marginBottom: '80px',
         }}
       >
         <DynamicLucideIcon
           name={service.icon}
-          size={64}
+          size={80}
           strokeWidth={1.5}
           color="var(--clr-gold)"
           style={{ marginBottom: '1rem' }}
         />
-        <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', marginBottom: '0.5rem' }}>
+        <h1 style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', marginBottom: '0.5rem' }}>
           {service.name}
         </h1>
-        <p style={{ fontSize: '1.2rem', maxWidth: '700px', marginBottom: '1.5rem' }}>
+        <p style={{ fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto' }}>
           {service.summary}
         </p>
       </div>
 
-      <SubcategoryMarquee subcategories={subcategories} />
+      {/* Subcategory marquee at bottom */}
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 2 }}>
+        {subcategories.length > 0 && <SubcategoryMarquee subcategories={subcategories} />}
+      </div>
     </div>
   )
 }
@@ -477,7 +384,8 @@ export default function ServiceDetail() {
   return (
     <PageWrapper title={service.name} description={service.summary}>
       <ServiceHero service={service} />
-      <section className="section" style={{ background: 'var(--clr-void)' }}>
+      
+      <section className="section" style={{ background: 'var(--clr-void)', position: 'relative', zIndex: 2 }}>
         <div className="container">
           {service.content && (
             <div

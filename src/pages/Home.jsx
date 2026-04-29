@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -7,14 +7,14 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/effect-fade'
 
-import PageWrapper   from '../components/ui/PageWrapper'
+import PageWrapper from '../components/ui/PageWrapper'
 import SectionHeader from '../components/ui/SectionHeader'
-import BookingCTA    from '../components/ui/BookingCTA'
+import BookingCTA from '../components/ui/BookingCTA'
 import DynamicLucideIcon from '../components/ui/DynamicLucideIcon'
-import { HERO_SLIDES, STATS, SITE } from '../data/site'
+import { HERO_SLIDES, STATS } from '../data/site'
 import api from '../utils/api'
 
-/* ─── Hero Slider ───────────────────────────────────────────── */
+// Hero Slider Component
 function HeroSlider() {
   return (
     <section style={{ position: 'relative', height: '100svh', minHeight: '600px', overflow: 'hidden' }}>
@@ -29,20 +29,16 @@ function HeroSlider() {
         {HERO_SLIDES.map((slide) => (
           <SwiperSlide key={slide.id}>
             <div style={{ position: 'relative', height: '100%' }}>
-              {/* Background image */}
               <div style={{
                 position: 'absolute', inset: 0,
                 backgroundImage: `url(${slide.image})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }} />
-              {/* Overlay */}
               <div style={{
                 position: 'absolute', inset: 0,
                 background: 'linear-gradient(105deg, rgba(12,12,14,0.88) 0%, rgba(12,12,14,0.55) 60%, rgba(12,12,14,0.3) 100%)',
               }} />
-
-              {/* Content */}
               <div className="container" style={{
                 position: 'relative', zIndex: 1, height: '100%',
                 display: 'flex', alignItems: 'center', paddingTop: '5rem',
@@ -57,17 +53,15 @@ function HeroSlider() {
                     <span className="gold-line" style={{ width: '3rem' }} />
                     <span className="label gold">DreamRoots Kenya</span>
                   </motion.div>
-
                   <motion.h1
                     className="display-xl"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.8, delay: 0.1 }}
                     style={{ whiteSpace: 'pre-line', marginBottom: '1.5rem' }}
                   >
                     {slide.heading}
                   </motion.h1>
-
                   <motion.p
                     className="body-lg"
                     initial={{ opacity: 0, y: 20 }}
@@ -77,7 +71,6 @@ function HeroSlider() {
                   >
                     {slide.sub}
                   </motion.p>
-
                   <motion.div
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -93,8 +86,6 @@ function HeroSlider() {
           </SwiperSlide>
         ))}
       </Swiper>
-
-      {/* Scroll indicator */}
       <div style={{
         position: 'absolute', bottom: '3.5rem', left: '50%', transform: 'translateX(-50%)',
         zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
@@ -110,7 +101,7 @@ function HeroSlider() {
   )
 }
 
-/* ─── Stats strip ───────────────────────────────────────────── */
+// Stats Strip Component
 function StatsStrip() {
   return (
     <section style={{
@@ -148,77 +139,7 @@ function StatsStrip() {
   )
 }
 
-/* ─── About Teaser ──────────────────────────────────────────── */
-function AboutTeaser() {
-  return (
-    <section className="section" style={{ background: 'var(--clr-void)' }}>
-      <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'clamp(3rem, 6vw, 6rem)', alignItems: 'center' }}>
-
-          {/* Text */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, x: -24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-                <span className="gold-line" />
-                <span className="label gold">Who We Are</span>
-              </div>
-              <h2 className="display-lg" style={{ marginBottom: '1.5rem' }}>
-                Rooted in Purpose.<br />
-                <span style={{ fontStyle: 'italic', color: 'var(--clr-text-muted)', fontFamily: 'var(--font-serif)', fontWeight: 300 }}>
-                  Driven by Impact.
-                </span>
-              </h2>
-              <p className="body-lg" style={{ color: 'var(--clr-text-muted)', marginBottom: '1.25rem' }}>
-                DreamRoots Kenya is a Nairobi-based consulting firm empowering organizations and individuals across Kenya with innovative solutions in Finance, ICT, Research, Human Resource Management, and Marketing.
-              </p>
-              <p style={{ color: 'var(--clr-text-muted)', fontSize: '0.9rem', lineHeight: 1.85, marginBottom: '2rem' }}>
-                Our expert team blends deep local knowledge with global best practices to deliver tailored strategies that drive growth, resilience, and lasting impact.
-              </p>
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <Link to="/about" className="btn-gold"><span>Our Story</span></Link>
-                <Link to="/team" className="btn-ghost">Meet the Team</Link>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Values list */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-          >
-            {['Integrity', 'Excellence', 'Collaboration', 'Innovation', 'Sustainability'].map((v, i) => (
-              <div key={v} style={{
-                display: 'flex', alignItems: 'center', gap: '1rem',
-                padding: '1rem 0',
-                borderBottom: '1px solid var(--clr-border)',
-              }}>
-                <span style={{
-                  fontFamily: 'var(--font-display)',
-                  color: 'var(--clr-gold)',
-                  fontSize: '0.75rem',
-                  opacity: 0.5,
-                  minWidth: '2.5rem',
-                }}>
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span style={{ color: 'var(--clr-text)', fontSize: '0.9rem', letterSpacing: '0.05em' }}>{v}</span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ─── Services Grid with Lucide Icons ──────────────────────── */
+// Services Section (fetched from API)
 function ServicesSection({ services }) {
   if (!services || services.length === 0) {
     return (
@@ -238,81 +159,48 @@ function ServicesSection({ services }) {
           title="Our Services"
           subtitle="Comprehensive consulting solutions tailored to Kenya's unique landscape and global best practices."
         />
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '2px' }}>
-          {services.map((svc, i) => (
-            <motion.div
-              key={svc.slug}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-20px' }}
-              transition={{ duration: 0.55, delay: (i % 4) * 0.08 }}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '2rem' }}>
+          {services.map((service) => (
+            <Link
+              key={service.id}
+              to={`/services/${service.slug}`}
+              style={{ textDecoration: 'none' }}
             >
-              <Link
-                to={`/services/${svc.slug}`}
-                style={{ textDecoration: 'none', display: 'block' }}
+              <div
+                style={{
+                  background: 'var(--clr-surface)',
+                  padding: '2rem',
+                  borderRadius: '12px',
+                  transition: 'all 0.3s ease',
+                  border: '1px solid var(--clr-border)',
+                  height: '100%',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)'
+                  e.currentTarget.style.borderColor = 'var(--clr-gold)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.borderColor = 'var(--clr-border)'
+                }}
               >
-                <div
-                  className="card-surface"
-                  style={{
-                    padding: '2.25rem 2rem',
-                    height: '100%',
-                    transition: 'background 0.3s, border-color 0.3s',
-                    position: 'relative',
-                    overflow: 'hidden',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = 'var(--clr-elevated)'
-                    e.currentTarget.querySelector('.svc-arrow').style.opacity = '1'
-                    e.currentTarget.querySelector('.svc-arrow').style.transform = 'translateX(0)'
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = 'var(--clr-surface)'
-                    e.currentTarget.querySelector('.svc-arrow').style.opacity = '0'
-                    e.currentTarget.querySelector('.svc-arrow').style.transform = 'translateX(-8px)'
-                  }}
-                >
-                  {/* Lucide Dynamic Icon */}
-                  <div style={{ marginBottom: '1.25rem' }}>
-                    <DynamicLucideIcon
-                      name={svc.icon}
-                      size={32}
-                      strokeWidth={1.5}
-                      color="var(--clr-gold)"
-                    />
-                  </div>
-
-                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.3rem', fontWeight: 300, color: 'var(--clr-text)', marginBottom: '0.75rem' }}>
-                    {svc.name}
-                  </h3>
-                  <p style={{ color: 'var(--clr-text-muted)', fontSize: '0.83rem', lineHeight: 1.8, marginBottom: '1.5rem' }}>
-                    {svc.summary}
-                  </p>
-                  <div
-                    className="svc-arrow"
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: '0.4rem',
-                      color: 'var(--clr-gold)', fontSize: '0.72rem', letterSpacing: '0.15em', textTransform: 'uppercase',
-                      opacity: 0, transform: 'translateX(-8px)', transition: 'all 0.3s',
-                    }}
-                  >
-                    Learn more <span>→</span>
-                  </div>
-
-                  {/* Bottom accent */}
-                  <div style={{
-                    position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px',
-                    background: 'linear-gradient(90deg, var(--clr-gold), transparent)',
-                    transform: 'scaleX(0)', transformOrigin: 'left',
-                    transition: 'transform 0.4s',
-                  }} className="svc-underline" />
-                </div>
-              </Link>
-            </motion.div>
+                <DynamicLucideIcon
+                  name={service.icon}
+                  size={48}
+                  strokeWidth={1.5}
+                  color="var(--clr-gold)"
+                />
+                <h3 style={{ fontSize: '1.5rem', marginTop: '1rem', marginBottom: '0.5rem', color: 'var(--clr-text)' }}>
+                  {service.name}
+                </h3>
+                <p style={{ color: 'var(--clr-text-muted)', lineHeight: 1.6 }}>
+                  {service.summary}
+                </p>
+              </div>
+            </Link>
           ))}
         </div>
-
-        <div style={{ marginTop: '3rem', textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', marginTop: '3rem' }}>
           <Link to="/services" className="btn-ghost">View All Services</Link>
         </div>
       </div>
@@ -320,86 +208,39 @@ function ServicesSection({ services }) {
   )
 }
 
-/* ─── Board Preview ─────────────────────────────────────────── */
-function BoardPreview({ board }) {
-  if (!board || board.length === 0) return null
-
-  return (
-    <section className="section" style={{ background: 'var(--clr-void)' }}>
-      <div className="container">
-        <SectionHeader
-          label="Leadership"
-          title="Board of Directors"
-          subtitle="Experienced leaders providing strategic governance and direction across DreamRoots Kenya's consulting practice."
-        />
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2px', marginBottom: '3rem' }}>
-          {board.map((member, i) => (
-            <motion.div
-              key={member.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
-              style={{
-                background: 'var(--clr-surface)',
-                border: '1px solid var(--clr-border)',
-                overflow: 'hidden',
-                transition: 'border-color 0.3s',
-              }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--clr-border-md)'}
-              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--clr-border)'}
-            >
-              <div style={{ height: '240px', overflow: 'hidden', background: 'var(--clr-elevated)', position: 'relative' }}>
-                <img
-                  src={member.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=1B4F72&color=fff`}
-                  alt={member.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', filter: 'grayscale(20%)' }}
-                />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, var(--clr-surface) 0%, transparent 55%)' }} />
-              </div>
-              <div style={{ padding: '1.5rem' }}>
-                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 300, marginBottom: '0.25rem' }}>{member.name}</h3>
-                <p className="label gold" style={{ fontSize: '0.65rem', letterSpacing: '0.18em' }}>{member.role}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          <Link to="/board" className="btn-gold"><span>View Board</span></Link>
-          <Link to="/team" className="btn-ghost">Management Team</Link>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ─── Main Page ─────────────────────────────────────────────── */
+// Main Home Component
 export default function Home() {
   const [services, setServices] = useState([])
-  const [board, setBoard] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     api.get('/services')
-      .then(res => setServices(res.data))
-      .catch(err => console.error('Services fetch error:', err))
-
-    api.get('/team/board')
-      .then(res => setBoard(res.data))
-      .catch(err => console.error('Board fetch error:', err))
+      .then(response => {
+        setServices(response.data)
+        setLoading(false)
+      })
+      .catch(error => {
+        console.error('Error fetching services:', error)
+        setLoading(false)
+      })
   }, [])
+
+  if (loading) {
+    return (
+      <PageWrapper title="DreamRoots Kenya - Loading">
+        <div style={{ textAlign: 'center', padding: '4rem' }}>Loading...</div>
+      </PageWrapper>
+    )
+  }
 
   return (
     <PageWrapper
-      title={null}
-      description="DreamRoots Kenya — Rooted in Empowerment, Growing Your Potential. Leading Nairobi-based consulting firm specializing in Finance, ICT, Research, HR, and Education."
+      title="DreamRoots Kenya | Rooted in Empowerment, Growing Your Potential"
+      description="DreamRoots Kenya is a Nairobi-based consulting firm specializing in Education Consultancy, ICT, Finance, HR, Marketing, Research, and Training."
     >
       <HeroSlider />
       <StatsStrip />
-      <AboutTeaser />
       <ServicesSection services={services} />
-      <BoardPreview board={board} />
       <BookingCTA />
     </PageWrapper>
   )
