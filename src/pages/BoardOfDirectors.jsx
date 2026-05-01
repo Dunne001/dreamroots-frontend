@@ -1,199 +1,139 @@
-import { motion } from 'framer-motion'
-import PageWrapper from '../components/ui/PageWrapper'
-import PageHero   from '../components/ui/PageHero'
-import BookingCTA from '../components/ui/BookingCTA'
-import { BOARD }  from '../data/site'
+import { useEffect, useState } from 'react';
+import PageWrapper from '../components/ui/PageWrapper';
+import api from '../utils/api';
 
-/* ─── Board Member Card ─────────────────────────────────────── */
-function BoardCard({ member, index }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.7, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-      style={{
-        display: 'grid',
-        gridTemplateColumns: index % 2 === 0 ? '1fr 1.4fr' : '1.4fr 1fr',
-        gap: 0,
-        border: '1px solid var(--clr-border)',
-        background: 'var(--clr-surface)',
-        overflow: 'hidden',
-        transition: 'border-color 0.4s',
-      }}
-      onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--clr-border-md)'}
-      onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--clr-border)'}
-    >
-      {/* Image panel — alternates left/right */}
-      {index % 2 !== 0 && <ContentPanel member={member} />}
-
-      <div style={{ position: 'relative', overflow: 'hidden', minHeight: '420px', background: 'var(--clr-elevated)' }}>
-        {/* Gold corner accent */}
-        <div aria-hidden style={{
-          position: 'absolute', zIndex: 2,
-          ...(index % 2 === 0
-            ? { top: 0, right: 0, width: '80px', height: '80px',
-                background: 'linear-gradient(225deg, var(--clr-gold-dim) 0%, transparent 60%)' }
-            : { top: 0, left: 0, width: '80px', height: '80px',
-                background: 'linear-gradient(315deg, var(--clr-gold-dim) 0%, transparent 60%)' }
-          ),
-        }} />
-
-        {/* Number */}
-        <div aria-hidden style={{
-          position: 'absolute', zIndex: 2,
-          bottom: '1.5rem',
-          ...(index % 2 === 0 ? { left: '1.5rem' } : { right: '1.5rem' }),
-          fontFamily: 'var(--font-display)',
-          fontSize: '5rem',
-          fontWeight: 400,
-          color: 'rgba(212,175,55,0.06)',
-          lineHeight: 1,
-          userSelect: 'none',
-          letterSpacing: '0.05em',
-        }}>
-          {String(index + 1).padStart(2, '0')}
-        </div>
-
-        {/* Photo */}
-        <motion.img
-          src={member.image}
-          alt={member.name}
-          whileHover={{ scale: 1.04 }}
-          transition={{ duration: 0.6 }}
-          style={{
-            width: '100%', height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center top',
-            display: 'block',
-            filter: 'grayscale(20%) contrast(1.05)',
-          }}
-          onError={e => {
-            e.target.style.display = 'none'
-            e.target.parentElement.style.display = 'flex'
-            e.target.parentElement.style.alignItems = 'center'
-            e.target.parentElement.style.justifyContent = 'center'
-          }}
-        />
-      </div>
-
-      {index % 2 === 0 && <ContentPanel member={member} />}
-    </motion.div>
-  )
-}
-
-function ContentPanel({ member }) {
-  return (
-    <div style={{ padding: 'clamp(2.5rem, 5vw, 4rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '1.5rem' }}>
-      {/* Role badge */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-        <span className="gold-line" />
-        <span className="label gold">{member.role}</span>
-      </div>
-
-      {/* Name */}
-      <div>
-        <h3 style={{
-          fontFamily: 'var(--font-serif)',
-          fontSize: 'clamp(1.6rem, 3vw, 2.4rem)',
-          fontWeight: 300,
-          color: 'var(--clr-text)',
-          marginBottom: '0.35rem',
-          lineHeight: 1.2,
-        }}>
-          {member.name}
-        </h3>
-        <p className="label" style={{ color: 'var(--clr-gold)', letterSpacing: '0.2em' }}>{member.title}</p>
-      </div>
-
-      {/* Bio */}
-      <p style={{ color: 'var(--clr-text-muted)', fontSize: '0.9rem', lineHeight: 1.85, borderLeft: '2px solid var(--clr-border)', paddingLeft: '1.25rem' }}>
-        {member.bio}
-      </p>
-
-      {/* Expertise tags */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-        {member.expertise.map((tag) => (
-          <span key={tag} style={{
-            padding: '0.3rem 0.8rem',
-            border: '1px solid var(--clr-border)',
-            color: 'var(--clr-text-muted)',
-            fontSize: '0.68rem',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            fontFamily: 'var(--font-sans)',
-          }}>
-            {tag}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/* ─── Page ──────────────────────────────────────────────────── */
 export default function BoardOfDirectors() {
+  const [board, setBoard] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    api.get('/team/board')
+      .then(response => {
+        setBoard(response.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching board:', err);
+        setError('Failed to load board members. Please try again later.');
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <PageWrapper title="Board of Directors | DreamRoots Kenya">
+        <div style={{ textAlign: 'center', padding: '4rem' }}>Loading board members...</div>
+      </PageWrapper>
+    );
+  }
+
+  if (error) {
+    return (
+      <PageWrapper title="Board of Directors | DreamRoots Kenya">
+        <div style={{ textAlign: 'center', padding: '4rem', color: 'red' }}>{error}</div>
+      </PageWrapper>
+    );
+  }
+
   return (
-    <PageWrapper
-      title="Board of Directors"
-      description="Meet the DreamRoots Kenya Board of Directors — experienced leaders shaping the strategic direction of our consultancy."
+    <PageWrapper 
+      title="Board of Directors | DreamRoots Kenya" 
+      description="Meet the Board of Directors at DreamRoots Kenya"
     >
-      <PageHero
-        label="Governance"
-        title="Board of Directors"
-        subtitle="Seasoned leaders providing strategic direction, ethical governance, and institutional oversight across DreamRoots Kenya's consulting practice."
-        breadcrumb={['Home', 'About', 'Board of Directors']}
-      />
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '4rem 2rem' }}>
+        <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem', textAlign: 'center' }}>Board of Directors</h1>
+        <p style={{ textAlign: 'center', marginBottom: '3rem', color: 'var(--clr-text-muted)' }}>
+          Experienced leaders providing strategic governance and direction
+        </p>
 
-      {/* Intro quote */}
-      <section style={{ padding: 'clamp(3rem, 6vw, 5rem) 0', background: 'var(--clr-void)' }}>
-        <div className="container" style={{ maxWidth: '760px', textAlign: 'center' }}>
-          <motion.blockquote
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="gold-line-center" style={{ marginBottom: '2rem' }} />
-            <p style={{
-              fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(1.2rem, 2.5vw, 1.7rem)',
-              fontWeight: 300,
-              fontStyle: 'italic',
-              color: 'var(--clr-text)',
-              lineHeight: 1.6,
-              marginBottom: '1.5rem',
-            }}>
-              "Our board represents decades of collective wisdom across finance, governance, human capital, and strategic development — united by a singular commitment to Kenya's growth."
-            </p>
-            <span className="label" style={{ color: 'var(--clr-text-faint)' }}>DreamRoots Kenya Leadership</span>
-          </motion.blockquote>
+        <style>{`
+          .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 380px;
+            perspective: 1000px;
+            cursor: pointer;
+          }
+          .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            border-radius: 16px;
+          }
+          .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+          }
+          .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+          }
+          .flip-card-front {
+            background-color: var(--clr-surface);
+            color: var(--clr-text);
+          }
+          .flip-card-back {
+            background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-deep) 100%);
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1.5rem;
+            text-align: center;
+          }
+        `}</style>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '2rem'
+        }}>
+          {board.map((member, index) => (
+            <div key={member.id || index} className="flip-card">
+              <div className="flip-card-inner">
+                {/* Front of card */}
+                <div className="flip-card-front">
+                  <div style={{ height: '280px', overflow: 'hidden', background: '#1a2d50' }}>
+                    <img
+                      src={member.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=1B4F72&color=fff&size=280&bold=true`}
+                      alt={member.name}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center top'
+                      }}
+                    />
+                  </div>
+                  <div style={{ padding: '1rem' }}>
+                    <h3 style={{ fontSize: '1.2rem', marginBottom: '0.25rem' }}>{member.name}</h3>
+                    <p style={{ color: 'var(--clr-gold)', fontWeight: 'bold', fontSize: '0.85rem' }}>{member.role}</p>
+                  </div>
+                </div>
+
+                {/* Back of card */}
+                <div className="flip-card-back">
+                  <h3 style={{ fontSize: '1.3rem', marginBottom: '0.5rem', color: 'var(--clr-gold)' }}>{member.name}</h3>
+                  <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', fontStyle: 'italic' }}>{member.role}</p>
+                  <div style={{ width: '50px', height: '2px', background: 'var(--clr-gold)', margin: '0.75rem auto' }} />
+                  <p style={{ fontSize: '0.85rem', lineHeight: 1.5, opacity: 0.9 }}>
+                    {member.bio || 'Dedicated professional committed to driving excellence and impact at DreamRoots Kenya.'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </section>
-
-      {/* Board cards */}
-      <section style={{ padding: 'clamp(3rem, 6vw, 6rem) 0 clamp(4rem, 8vw, 8rem)', background: 'var(--clr-void)' }}>
-        <div className="container">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-            {BOARD.map((member, i) => (
-              <BoardCard key={member.id} member={member} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <BookingCTA
-        title="Work with Experienced Leaders"
-        subtitle="Our board's collective expertise ensures every engagement is grounded in strategic insight, integrity, and long-term vision."
-      />
-
-      {/* Responsive override */}
-      <style>{`
-        @media (max-width: 720px) {
-          .board-card-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+      </div>
     </PageWrapper>
-  )
+  );
 }
-

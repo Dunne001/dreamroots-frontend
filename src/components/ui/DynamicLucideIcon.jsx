@@ -1,25 +1,32 @@
-import * as Icons from 'lucide-react'
+import * as Icons from 'lucide-react';
 
 // Convert kebab-case to PascalCase
-// Example: "graduation-cap" -> "GraduationCap"
 const toPascalCase = (str) => {
+  if (!str) return 'Circle';
   return str
     .split('-')
     .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-    .join('')
-}
+    .join('');
+};
 
-const DynamicLucideIcon = ({ name, size = 24, color = 'currentColor', strokeWidth = 1.5 }) => {
-  // Convert the name to PascalCase to match Lucide component names
-  const componentName = toPascalCase(name)
-  const IconComponent = Icons[componentName]
+// Special mapping for known mismatches
+const specialMap = {
+  'laptop-code': 'Laptop',
+  'chart-line': 'LineChart',
+  'bullhorn': 'Megaphone',
+  'chalkboard-teacher': 'School',
+};
 
+const DynamicLucideIcon = ({ name, size = 24, color = 'currentColor', strokeWidth = 1.5, style = {} }) => {
+  let componentName = specialMap[name] || toPascalCase(name);
+  let IconComponent = Icons[componentName];
+  
   if (!IconComponent) {
-    console.warn(`Icon "${name}" (converted to "${componentName}") not found, using Circle`)
-    return <Icons.Circle size={size} color={color} strokeWidth={strokeWidth} />
+    console.warn(`Icon "${name}" not found, using Circle`);
+    IconComponent = Icons.Circle;
   }
+  
+  return <IconComponent size={size} color={color} strokeWidth={strokeWidth} style={style} />;
+};
 
-  return <IconComponent size={size} color={color} strokeWidth={strokeWidth} />
-}
-
-export default DynamicLucideIcon
+export default DynamicLucideIcon;
