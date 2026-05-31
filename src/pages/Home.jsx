@@ -11,7 +11,7 @@ import PageWrapper from '../components/ui/PageWrapper'
 import SectionHeader from '../components/ui/SectionHeader'
 import BookingCTA from '../components/ui/BookingCTA'
 import DynamicLucideIcon from '../components/ui/DynamicLucideIcon'
-import { HERO_SLIDES, STATS } from '../data/site'
+import { HERO_SLIDES } from '../data/site'
 import api from '../utils/api'
 
 // Hero Slider Component
@@ -58,7 +58,7 @@ function HeroSlider() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.1 }}
-                    style={{ whiteSpace: 'pre-line', marginBottom: '1.5rem' }}
+                    style={{ whiteSpace: 'normal', marginBottom: '1.5rem' }}
                   >
                     {slide.heading}
                   </motion.h1>
@@ -112,7 +112,12 @@ function StatsStrip() {
     }}>
       <div className="container">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '2rem' }}>
-          {STATS.map((stat, i) => (
+          {[
+  { value: '8+', label: 'Service Verticals' },
+  { value: '9', label: 'Expert Consultants' },
+  { value: '3', label: 'Board Directors' },
+  { value: 'KE', label: 'Nairobi-Based' },
+].map((stat, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}

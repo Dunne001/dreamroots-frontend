@@ -38,7 +38,7 @@ export default function Navbar() {
     <header
       ref={navRef}
       style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
         transition: 'background 0.4s, backdrop-filter 0.4s, border-color 0.4s',
         background: scrolled ? 'rgba(12,12,14,0.92)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
@@ -233,4 +233,5 @@ export default function Navbar() {
     </header>
   )
 }
+
 

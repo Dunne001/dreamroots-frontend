@@ -294,39 +294,30 @@ export const VALUES = [
 export const HERO_SLIDES = [
   {
     id: 1,
-    heading: 'Empowering Institutions\nfor a Smarter Future',
-    sub: 'Tailored training and innovative solutions designed to elevate your organization\'s performance.',
+    heading: 'Empowering Institutions for a Smarter Future',
+    sub: "Tailored training and innovative solutions designed to elevate your organization's performance.",
     cta: 'Book a Consultation',
-    image: 'https://dreamrootskenya.com/wp-content/uploads/2025/05/slide1.jpg',
+    image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&q=80',
   },
   {
     id: 2,
-    heading: 'Driving Excellence\nThrough Research',
+    heading: 'Driving Excellence Through Research',
     sub: 'Comprehensive research services that inform strategic decisions and foster sustainable growth.',
     cta: 'Our Research Services',
-    image: 'https://dreamrootskenya.com/wp-content/uploads/2025/05/slide2.jpg',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&q=80',
   },
   {
     id: 3,
-    heading: 'Innovative ICT\nSolutions',
+    heading: 'Innovative ICT Solutions',
     sub: 'Harness cutting-edge technology to streamline operations and enhance digital transformation.',
     cta: 'Explore ICT Services',
-    image: 'https://dreamrootskenya.com/wp-content/uploads/2025/05/slide3.jpg',
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1600&q=80',
   },
   {
     id: 4,
-    heading: 'Consulting with\na Local Touch',
-    sub: 'We combine practical experience and research to deliver solutions tailored to Kenya\'s unique needs.',
+    heading: 'Consulting with a Local Touch',
+    sub: "We combine practical experience and research to deliver solutions tailored to Kenya's unique needs.",
     cta: 'Learn More',
-    image: 'https://dreamrootskenya.com/wp-content/uploads/2025/05/nairobi.jpg',
+    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1600&q=80',
   },
 ];
-
-/* ─── Stats ─────────────────────────────────────────────────── */
-export const STATS = [
-  { value: '8+', label: 'Service Verticals' },
-  { value: '9', label: 'Expert Consultants' },
-  { value: '3', label: 'Board Directors' },
-  { value: 'KE', label: 'Nairobi-Based' },
-];
-
