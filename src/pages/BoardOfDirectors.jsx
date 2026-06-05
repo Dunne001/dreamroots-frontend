@@ -28,14 +28,14 @@ function BoardCard({ member, index }) {
       {index % 2 !== 0 && <ContentPanel member={member} />}
 
       <div style={{ position: 'relative', overflow: 'hidden', minHeight: '420px', background: 'var(--clr-elevated)' }}>
-        {/* Gold corner accent */}
+        {/* Blue corner accent */}
         <div aria-hidden style={{
           position: 'absolute', zIndex: 2,
           ...(index % 2 === 0
             ? { top: 0, right: 0, width: '80px', height: '80px',
-                background: 'linear-gradient(225deg, var(--clr-gold-dim) 0%, transparent 60%)' }
+                background: 'linear-gradient(225deg, var(--clr-blue-dim) 0%, transparent 60%)' }
             : { top: 0, left: 0, width: '80px', height: '80px',
-                background: 'linear-gradient(315deg, var(--clr-gold-dim) 0%, transparent 60%)' }
+                background: 'linear-gradient(315deg, var(--clr-blue-dim) 0%, transparent 60%)' }
           ),
         }} />
 
@@ -47,7 +47,7 @@ function BoardCard({ member, index }) {
           fontFamily: 'var(--font-display)',
           fontSize: '5rem',
           fontWeight: 400,
-          color: 'rgba(212,175,55,0.06)',
+          color: 'rgba(26,86,219,0.06)',
           lineHeight: 1,
           userSelect: 'none',
           letterSpacing: '0.05em',
@@ -87,8 +87,8 @@ function ContentPanel({ member }) {
     <div style={{ padding: 'clamp(2.5rem, 5vw, 4rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '1.5rem' }}>
       {/* Role badge */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-        <span className="gold-line" />
-        <span className="label gold">{member.role}</span>
+        <span className="blue-line" />
+        <span className="label blue">{member.role}</span>
       </div>
 
       {/* Name */}
@@ -103,7 +103,7 @@ function ContentPanel({ member }) {
         }}>
           {member.name}
         </h3>
-        <p className="label" style={{ color: 'var(--clr-gold)', letterSpacing: '0.2em' }}>{member.title}</p>
+        <p className="label" style={{ color: 'var(--clr-blue)', letterSpacing: '0.2em' }}>{member.title}</p>
       </div>
 
       {/* Bio */}
@@ -154,7 +154,7 @@ export default function BoardOfDirectors() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="gold-line-center" style={{ marginBottom: '2rem' }} />
+            <span className="blue-line-center" style={{ marginBottom: '2rem' }} />
             <p style={{
               fontFamily: 'var(--font-serif)',
               fontSize: 'clamp(1.2rem, 2.5vw, 1.7rem)',

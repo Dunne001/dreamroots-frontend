@@ -52,8 +52,8 @@ function HeroSlider() {
                     transition={{ duration: 0.6 }}
                     style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}
                   >
-                    <span className="gold-line" style={{ width: '3rem' }} />
-                    <span className="label gold">DreamRoots Kenya</span>
+                    <span className="blue-line" style={{ width: '3rem' }} />
+                    <span className="label blue">DreamRoots Kenya</span>
                   </motion.div>
 
                   <motion.h1
@@ -82,7 +82,7 @@ function HeroSlider() {
                     transition={{ duration: 0.6, delay: 0.4 }}
                     style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}
                   >
-                    <Link to="/booking" className="btn-gold"><span>{slide.cta}</span></Link>
+                    <Link to="/booking" className="btn-blue"><span>{slide.cta}</span></Link>
                     <Link to="/services" className="btn-ghost">Our Services</Link>
                   </motion.div>
                 </div>
@@ -101,7 +101,7 @@ function HeroSlider() {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.8 }}
-          style={{ width: '1px', height: '2.5rem', background: 'linear-gradient(to bottom, var(--clr-gold), transparent)' }}
+          style={{ width: '1px', height: '2.5rem', background: 'linear-gradient(to bottom, var(--clr-blue), transparent)' }}
         />
       </div>
     </section>
@@ -131,7 +131,7 @@ function StatsStrip() {
               <div style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(2rem, 4vw, 2.8rem)',
-                color: 'var(--clr-gold)',
+                color: 'var(--clr-blue)',
                 letterSpacing: '0.08em',
                 marginBottom: '0.35rem',
               }}>
@@ -162,8 +162,8 @@ function AboutTeaser() {
               transition={{ duration: 0.7 }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-                <span className="gold-line" />
-                <span className="label gold">Who We Are</span>
+                <span className="blue-line" />
+                <span className="label blue">Who We Are</span>
               </div>
               <h2 className="display-lg" style={{ marginBottom: '1.5rem' }}>
                 Rooted in Purpose.<br />
@@ -178,7 +178,7 @@ function AboutTeaser() {
                 Our expert team blends deep local knowledge with global best practices to deliver tailored strategies that drive growth, resilience, and lasting impact.
               </p>
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <Link to="/about" className="btn-gold"><span>Our Story</span></Link>
+                <Link to="/about" className="btn-blue"><span>Our Story</span></Link>
                 <Link to="/team" className="btn-ghost">Meet the Team</Link>
               </div>
             </motion.div>
@@ -199,7 +199,7 @@ function AboutTeaser() {
               }}>
                 <span style={{
                   fontFamily: 'var(--font-display)',
-                  color: 'var(--clr-gold)',
+                  color: 'var(--clr-blue)',
                   fontSize: '0.75rem',
                   opacity: 0.5,
                   minWidth: '2.5rem',
@@ -253,14 +253,16 @@ function ServicesSection() {
                     e.currentTarget.style.background = 'var(--clr-elevated)'
                     e.currentTarget.querySelector('.svc-arrow').style.opacity = '1'
                     e.currentTarget.querySelector('.svc-arrow').style.transform = 'translateX(0)'
+                    e.currentTarget.querySelector('.svc-underline').style.transform = 'scaleX(1)'
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.background = 'var(--clr-surface)'
                     e.currentTarget.querySelector('.svc-arrow').style.opacity = '0'
                     e.currentTarget.querySelector('.svc-arrow').style.transform = 'translateX(-8px)'
+                    e.currentTarget.querySelector('.svc-underline').style.transform = 'scaleX(0)'
                   }}
                 >
-                  <div style={{ fontSize: '1.4rem', color: 'var(--clr-gold)', marginBottom: '1.25rem', opacity: 0.7 }}>{svc.icon}</div>
+                  <div style={{ fontSize: '1.4rem', color: 'var(--clr-blue)', marginBottom: '1.25rem', opacity: 0.7 }}>{svc.icon}</div>
                   <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.3rem', fontWeight: 300, color: 'var(--clr-text)', marginBottom: '0.75rem' }}>
                     {svc.title}
                   </h3>
@@ -271,7 +273,7 @@ function ServicesSection() {
                     className="svc-arrow"
                     style={{
                       display: 'flex', alignItems: 'center', gap: '0.4rem',
-                      color: 'var(--clr-gold)', fontSize: '0.72rem', letterSpacing: '0.15em', textTransform: 'uppercase',
+                      color: 'var(--clr-blue)', fontSize: '0.72rem', letterSpacing: '0.15em', textTransform: 'uppercase',
                       opacity: 0, transform: 'translateX(-8px)', transition: 'all 0.3s',
                     }}
                   >
@@ -281,7 +283,7 @@ function ServicesSection() {
                   {/* Bottom accent */}
                   <div style={{
                     position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px',
-                    background: 'linear-gradient(90deg, var(--clr-gold), transparent)',
+                    background: 'linear-gradient(90deg, var(--clr-blue), transparent)',
                     transform: 'scaleX(0)', transformOrigin: 'left',
                     transition: 'transform 0.4s',
                   }} className="svc-underline" />
@@ -336,14 +338,14 @@ function BoardPreview() {
               </div>
               <div style={{ padding: '1.5rem' }}>
                 <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 300, marginBottom: '0.25rem' }}>{member.name}</h3>
-                <p className="label gold" style={{ fontSize: '0.65rem', letterSpacing: '0.18em' }}>{member.title}</p>
+                <p className="label blue" style={{ fontSize: '0.65rem', letterSpacing: '0.18em' }}>{member.title}</p>
               </div>
             </motion.div>
           ))}
         </div>
 
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          <Link to="/board" className="btn-gold"><span>View Board</span></Link>
+          <Link to="/board" className="btn-blue"><span>View Board</span></Link>
           <Link to="/team" className="btn-ghost">Management Team</Link>
         </div>
       </div>

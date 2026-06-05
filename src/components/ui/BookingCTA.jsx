@@ -10,12 +10,12 @@ export default function BookingCTA({ title, subtitle }) {
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Gold glow */}
+      {/* Blue glow */}
       <div aria-hidden style={{
         position: 'absolute', left: '50%', top: '50%',
         transform: 'translate(-50%, -50%)',
         width: '600px', height: '300px',
-        background: 'radial-gradient(ellipse, var(--clr-gold-glow) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse, var(--clr-blue-glow) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -26,7 +26,7 @@ export default function BookingCTA({ title, subtitle }) {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="gold-line-center" style={{ marginBottom: '1.5rem' }} />
+          <span className="blue-line-center" style={{ marginBottom: '1.5rem' }} />
 
           <h2 className="display-md" style={{ marginBottom: '1rem', fontStyle: 'italic' }}>
             {title || 'Ready to Transform Your Organization?'}
@@ -36,7 +36,7 @@ export default function BookingCTA({ title, subtitle }) {
           </p>
 
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/booking" className="btn-gold"><span>Book a Consultation</span></Link>
+            <Link to="/booking" className="btn-blue"><span>Book a Consultation</span></Link>
             <Link to="/contact" className="btn-ghost">Get in Touch</Link>
           </div>
         </motion.div>

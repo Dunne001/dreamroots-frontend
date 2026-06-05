@@ -53,8 +53,8 @@ export default function Contact() {
               transition={{ duration: 0.7 }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                <span className="gold-line" />
-                <span className="label gold">Reach Us</span>
+                <span className="blue-line" />
+                <span className="label blue">Reach Us</span>
               </div>
               <h2 className="display-md" style={{ marginBottom: '2rem', fontStyle: 'italic' }}>We'd love to hear from you.</h2>
 
@@ -69,12 +69,12 @@ export default function Contact() {
                   borderBottom: '1px solid var(--clr-border)',
                   alignItems: 'flex-start',
                 }}>
-                  <span style={{ color: 'var(--clr-gold)', fontSize: '1rem', marginTop: '2px', flexShrink: 0 }}>{item.icon}</span>
+                  <span style={{ color: 'var(--clr-blue)', fontSize: '1rem', marginTop: '2px', flexShrink: 0 }}>{item.icon}</span>
                   <div>
                     <div className="label" style={{ color: 'var(--clr-text-faint)', marginBottom: '0.35rem' }}>{item.label}</div>
                     {item.href ? (
                       <a href={item.href} style={{ color: 'var(--clr-text-muted)', textDecoration: 'none', fontSize: '0.9rem', transition: 'color 0.2s' }}
-                        onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-gold)'}
+                        onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-blue)'}
                         onMouseLeave={e => e.currentTarget.style.color = 'var(--clr-text-muted)'}
                       >
                         {item.value}
@@ -95,25 +95,25 @@ export default function Contact() {
               style={{
                 background: 'var(--clr-surface)',
                 border: '1px solid var(--clr-border)',
-                padding: 'clamp(2rem, 4vw, 3rem)',
+                padding: 'clamp(2.5rem, 4vw, 3rem)',
               }}
             >
               {submitted ? (
                 <div style={{ textAlign: 'center', padding: '3rem 1rem' }}>
-                  <div style={{ fontSize: '2.5rem', color: 'var(--clr-gold)', marginBottom: '1rem' }}>◆</div>
+                  <div style={{ fontSize: '2.5rem', color: 'var(--clr-blue)', marginBottom: '1rem' }}>◆</div>
                   <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.6rem', fontWeight: 300, marginBottom: '0.75rem' }}>Message Sent</h3>
                   <p style={{ color: 'var(--clr-text-muted)', fontSize: '0.9rem' }}>
                     Thank you for reaching out. A DreamRoots representative will get back to you shortly.
                   </p>
-                  <button onClick={() => setSubmitted(false)} className="btn-gold" style={{ marginTop: '2rem' }}>
+                  <button onClick={() => setSubmitted(false)} className="btn-blue" style={{ marginTop: '2rem' }}>
                     <span>Send Another</span>
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-                    <span className="gold-line" />
-                    <span className="label gold">Send a Message</span>
+                    <span className="blue-line" />
+                    <span className="label blue">Send a Message</span>
                   </div>
 
                   {[
@@ -130,7 +130,7 @@ export default function Contact() {
                         {...register(field.name, field.required ? { required: `${field.label} is required` } : {})}
                         type={field.type}
                         style={inputStyle(errors[field.name])}
-                        onFocus={e => e.target.style.borderColor = 'var(--clr-gold)'}
+                        onFocus={e => e.target.style.borderColor = 'var(--clr-blue)'}
                         onBlur={e => e.target.style.borderColor = errors[field.name] ? 'rgba(220,80,80,0.5)' : 'var(--clr-border)'}
                       />
                       {errors[field.name] && <p style={{ color: 'rgba(220,120,80,0.9)', fontSize: '0.72rem', marginTop: '0.3rem' }}>{errors[field.name].message}</p>}
@@ -145,7 +145,7 @@ export default function Contact() {
                       {...register('message', { required: 'Please include a message' })}
                       rows={5}
                       style={{ ...inputStyle(errors.message), resize: 'vertical', minHeight: '120px' }}
-                      onFocus={e => e.target.style.borderColor = 'var(--clr-gold)'}
+                      onFocus={e => e.target.style.borderColor = 'var(--clr-blue)'}
                       onBlur={e => e.target.style.borderColor = errors.message ? 'rgba(220,80,80,0.5)' : 'var(--clr-border)'}
                     />
                     {errors.message && <p style={{ color: 'rgba(220,120,80,0.9)', fontSize: '0.72rem', marginTop: '0.3rem' }}>{errors.message.message}</p>}
@@ -153,7 +153,7 @@ export default function Contact() {
 
                   <button
                     type="submit"
-                    className="btn-gold"
+                    className="btn-blue"
                     disabled={isSubmitting}
                     style={{ justifyContent: 'center', opacity: isSubmitting ? 0.7 : 1 }}
                   >

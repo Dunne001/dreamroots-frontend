@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { SITE } from '../data/site';
 
 const WhatsAppButton = () => {
   const [hovered, setHovered] = useState(false);
 
   return (
-<a
-      href="https://wa.me/254759098449"
+    <a
+      href={`https://wa.me/${SITE.phone.replace(/[^0-9]/g, '')}`}
       target="_blank"
       rel="noopener noreferrer"
       onMouseEnter={() => setHovered(true)}

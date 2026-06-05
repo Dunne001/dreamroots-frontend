@@ -40,17 +40,17 @@ export default function Navbar() {
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         transition: 'background 0.4s, backdrop-filter 0.4s, border-color 0.4s',
-        background: scrolled ? 'rgba(12,12,14,0.92)' : 'transparent',
+        background: scrolled ? 'rgba(10, 25, 47, 0.95)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? '1px solid var(--clr-border)' : '1px solid transparent',
+        borderBottom: scrolled ? '2px solid var(--clr-orange)' : '1px solid transparent',
       }}
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '5rem' }}>
 
         {/* Logo */}
         <Link to="/" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: '1px' }}>
-          <span className="font-display gold" style={{ fontSize: '1rem', letterSpacing: '0.18em' }}>DreamRoots</span>
-          <span className="label" style={{ color: 'var(--clr-text-muted)', letterSpacing: '0.3em', fontSize: '0.6rem' }}>Kenya Ltd.</span>
+          <span className="font-display blue" style={{ fontSize: '1rem', letterSpacing: '0.18em' }}>DreamRoots</span>
+          <span className="label" style={{ color: 'var(--clr-orange)', letterSpacing: '0.3em', fontSize: '0.6rem' }}>Kenya Ltd.</span>
         </Link>
 
         {/* Desktop nav */}
@@ -65,12 +65,12 @@ export default function Navbar() {
                       background: 'none', border: 'none', cursor: 'pointer',
                       display: 'flex', alignItems: 'center', gap: '0.35rem',
                       padding: '0.5rem 0.85rem',
-                      color: activeDropdown === link.path ? 'var(--clr-gold)' : 'var(--clr-text-muted)',
+                      color: activeDropdown === link.path ? 'var(--clr-blue)' : 'var(--clr-text-muted)',
                       fontFamily: 'var(--font-sans)', fontSize: '0.75rem',
                       fontWeight: 400, letterSpacing: '0.12em', textTransform: 'uppercase',
                       transition: 'color 0.25s',
                     }}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--clr-gold)' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--clr-blue)' }}
                     onMouseLeave={(e) => { if (activeDropdown !== link.path) e.currentTarget.style.color = 'var(--clr-text-muted)' }}
                   >
                     {link.label}
@@ -102,18 +102,18 @@ export default function Navbar() {
                             style={({ isActive }) => ({
                               display: 'block',
                               padding: '0.65rem 1.25rem',
-                              color: isActive ? 'var(--clr-gold)' : 'var(--clr-text-muted)',
+                              color: isActive ? 'var(--clr-blue)' : 'var(--clr-text-muted)',
                               textDecoration: 'none',
                               fontFamily: 'var(--font-sans)',
                               fontSize: '0.75rem',
                               letterSpacing: '0.1em',
                               textTransform: 'uppercase',
-                              borderLeft: isActive ? '1px solid var(--clr-gold)' : '1px solid transparent',
+                              borderLeft: isActive ? '1px solid var(--clr-blue)' : '1px solid transparent',
                               transition: 'color 0.2s, border-color 0.2s, background 0.2s',
                             })}
                             onMouseEnter={(e) => {
-                              e.currentTarget.style.color = 'var(--clr-gold)'
-                              e.currentTarget.style.background = 'var(--clr-gold-glow)'
+                              e.currentTarget.style.color = 'var(--clr-blue)'
+                              e.currentTarget.style.background = 'var(--clr-blue-glow)'
                             }}
                             onMouseLeave={(e) => {
                               e.currentTarget.style.background = 'transparent'
@@ -131,13 +131,13 @@ export default function Navbar() {
                   to={link.path}
                   style={({ isActive }) => ({
                     display: 'block', padding: '0.5rem 0.85rem', textDecoration: 'none',
-                    color: isActive ? 'var(--clr-gold)' : 'var(--clr-text-muted)',
+                    color: isActive ? 'var(--clr-blue)' : 'var(--clr-text-muted)',
                     fontFamily: 'var(--font-sans)', fontSize: '0.75rem',
                     fontWeight: 400, letterSpacing: '0.12em', textTransform: 'uppercase',
                     transition: 'color 0.25s',
                     position: 'relative',
                   })}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--clr-gold)' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--clr-blue)' }}
                   onMouseLeave={(e) => { if (!e.currentTarget.classList.contains('active')) e.currentTarget.style.color = 'var(--clr-text-muted)' }}
                 >
                   {link.label}
@@ -146,7 +146,7 @@ export default function Navbar() {
             </div>
           ))}
 
-          <Link to="/booking" className="btn-gold" style={{ marginLeft: '1rem', padding: '0.65rem 1.5rem' }}>
+          <Link to="/booking" className="btn-blue" style={{ marginLeft: '1rem', padding: '0.65rem 1.5rem' }}>
             <span>Book Now</span>
           </Link>
         </nav>
@@ -187,8 +187,8 @@ export default function Navbar() {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35 }}
             style={{
-              background: 'var(--clr-deep)',
-              borderTop: '1px solid var(--clr-border)',
+              background: 'rgba(10, 25, 47, 0.98)',
+              borderTop: '2px solid var(--clr-orange)',
               overflow: 'hidden',
             }}
           >
@@ -197,7 +197,7 @@ export default function Navbar() {
                 <div key={link.path}>
                   {link.children ? (
                     <>
-                      <span className="label" style={{ color: 'var(--clr-gold)', display: 'block', paddingBlock: '0.75rem 0.4rem' }}>{link.label}</span>
+                      <span className="label blue" style={{ color: 'var(--clr-blue)', display: 'block', paddingBlock: '0.75rem 0.4rem' }}>{link.label}</span>
                       {link.children.map((child) => (
                         <NavLink
                           key={child.path}
@@ -218,7 +218,7 @@ export default function Navbar() {
                   )}
                 </div>
               ))}
-              <Link to="/booking" className="btn-gold" style={{ marginTop: '1.5rem', justifyContent: 'center' }}>
+              <Link to="/booking" className="btn-blue" style={{ marginTop: '1.5rem', justifyContent: 'center' }}>
                 <span>Book a Consultation</span>
               </Link>
             </div>

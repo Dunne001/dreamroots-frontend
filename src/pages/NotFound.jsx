@@ -19,7 +19,7 @@ export default function NotFound() {
           position: 'absolute',
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(12rem, 30vw, 24rem)',
-          color: 'rgba(212,175,55,0.03)',
+          color: 'rgba(26,86,219,0.03)',
           letterSpacing: '0.05em',
           userSelect: 'none',
           lineHeight: 1,
@@ -33,9 +33,9 @@ export default function NotFound() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="gold-line-center" style={{ marginBottom: '2rem' }} />
+            <span className="blue-line-center" style={{ marginBottom: '2rem' }} />
 
-            <p className="label gold" style={{ marginBottom: '1.25rem' }}>404 — Page Not Found</p>
+            <p className="label blue" style={{ marginBottom: '1.25rem' }}>404 — Page Not Found</p>
 
             <h1 style={{
               fontFamily: 'var(--font-serif)',
@@ -52,7 +52,7 @@ export default function NotFound() {
             </p>
 
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/" className="btn-gold"><span>Back to Home</span></Link>
+              <Link to="/" className="btn-blue"><span>Back to Home</span></Link>
               <Link to="/contact" className="btn-ghost">Contact Us</Link>
             </div>
           </motion.div>

@@ -5,21 +5,23 @@
 /* ─── Design Tokens ─────────────────────────────────────────── */
 :root {
   /* Palette */
-  --clr-void:       #0c0c0e;
-  --clr-deep:       #111114;
-  --clr-surface:    #17171c;
-  --clr-elevated:   #1f1f26;
-  --clr-border:     rgba(212, 175, 55, 0.12);
-  --clr-border-md:  rgba(212, 175, 55, 0.25);
+  --clr-void:       #f8fafc;
+  --clr-deep:       #f1f5f9;
+  --clr-surface:    #0f172a;
+  --clr-elevated:   #1e293b;
+  --clr-border:     rgba(26, 86, 219, 0.12);
+  --clr-border-md:  rgba(26, 86, 219, 0.25);
 
-  --clr-gold:       #d4af37;
-  --clr-gold-light: #e8cc6a;
-  --clr-gold-dim:   rgba(212, 175, 55, 0.15);
-  --clr-gold-glow:  rgba(212, 175, 55, 0.08);
+  --clr-blue:       #1a56db;
+  --clr-blue-light: #3b82f6;
+  --clr-blue-dim:   rgba(26, 86, 219, 0.15);
+  --clr-blue-glow:  rgba(26, 86, 219, 0.08);
+  --clr-orange:     #ff6b35;
 
-  --clr-text:       #e8e6e0;
-  --clr-text-muted: #8a8780;
-  --clr-text-faint: #4a4845;
+  /* balanced text colors -- work on both light and dark */
+  --clr-text:       #0f172a;
+  --clr-text-muted: #475569;
+  --clr-text-faint: #64748b;
 
   /* Typography */
   --font-display:   'Cinzel', serif;
@@ -31,8 +33,17 @@
   --container:  min(90rem, 100% - 3rem);
 
   /* Motion */
-  --ease-gold: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-blue: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* DARK MODE -override text colors when background is dark */
+.dark-bg,
+[data-theme="dark"],
+body.dark {
+  --clr-text: #f1f5f9;
+  --clr-text-muted: #cbd5e1;
+  --clr-text-faint: #94a3b8;
 }
 
 /* ─── Reset & Base ──────────────────────────────────────────── */
@@ -86,22 +97,22 @@ h1, h2, h3, h4 { line-height: 1.15; }
 .body-sm { font-size: 0.875rem; line-height: 1.7; }
 .label   { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500; }
 
-/* ─── Gold accent elements ──────────────────────────────────── */
-.gold         { color: var(--clr-gold); }
-.gold-border  { border-color: var(--clr-gold); }
+/* ─── Blue accent elements ──────────────────────────────────── */
+.blue         { color: var(--clr-blue); }
+.blue-border  { border-color: var(--clr-blue); }
 
-.gold-line {
+.blue-line {
   display: block;
   width: 2.5rem;
   height: 1px;
-  background: linear-gradient(90deg, var(--clr-gold), transparent);
+  background: linear-gradient(90deg, var(--clr-blue), transparent);
 }
 
-.gold-line-center {
+.blue-line-center {
   display: block;
   width: 4rem;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--clr-gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--clr-blue), transparent);
   margin: 0 auto;
 }
 
@@ -114,14 +125,14 @@ h1, h2, h3, h4 { line-height: 1.15; }
 .section { padding-block: var(--section-py); }
 
 /* ─── Buttons ───────────────────────────────────────────────── */
-.btn-gold {
+.btn-blue {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   padding: 0.85rem 2.25rem;
   background: transparent;
-  border: 1px solid var(--clr-gold);
-  color: var(--clr-gold);
+  border: 1px solid var(--clr-blue);
+  color: var(--clr-blue);
   font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 500;
@@ -129,24 +140,24 @@ h1, h2, h3, h4 { line-height: 1.15; }
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.35s var(--ease-gold), color 0.35s var(--ease-gold);
+  transition: background 0.35s var(--ease-blue), color 0.35s var(--ease-blue);
   position: relative;
   overflow: hidden;
 }
 
-.btn-gold::before {
+.btn-blue::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--clr-gold);
+  background: var(--clr-blue);
   transform: translateX(-101%);
-  transition: transform 0.35s var(--ease-gold);
+  transition: transform 0.35s var(--ease-blue);
   z-index: 0;
 }
 
-.btn-gold:hover::before { transform: translateX(0); }
-.btn-gold:hover { color: var(--clr-void); }
-.btn-gold span { position: relative; z-index: 1; }
+.btn-blue:hover::before { transform: translateX(0); }
+.btn-blue:hover { color: var(--clr-void); }
+.btn-blue span { position: relative; z-index: 1; }
 
 .btn-ghost {
   display: inline-flex;
@@ -167,15 +178,15 @@ h1, h2, h3, h4 { line-height: 1.15; }
 }
 
 .btn-ghost:hover {
-  border-color: var(--clr-gold);
-  color: var(--clr-gold);
+  border-color: var(--clr-blue);
+  color: var(--clr-blue);
 }
 
 /* ─── Cards ─────────────────────────────────────────────────── */
 .card-surface {
   background: var(--clr-surface);
   border: 1px solid var(--clr-border);
-  transition: border-color 0.4s var(--ease-gold);
+  transition: border-color 0.4s var(--ease-blue);
 }
 
 .card-surface:hover { border-color: var(--clr-border-md); }
@@ -194,11 +205,11 @@ h1, h2, h3, h4 { line-height: 1.15; }
 /* ─── Scrollbar ─────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--clr-void); }
-::-webkit-scrollbar-thumb { background: var(--clr-gold-dim); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--clr-gold); }
+::-webkit-scrollbar-thumb { background: var(--clr-blue-dim); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--clr-blue); }
 
 /* ─── Selection ─────────────────────────────────────────────── */
-::selection { background: var(--clr-gold-dim); color: var(--clr-gold-light); }
+::selection { background: var(--clr-blue-dim); color: var(--clr-blue-light); }
 
 /* ─── Swiper overrides ──────────────────────────────────────── */
 .swiper-pagination-bullet {
@@ -208,13 +219,12 @@ h1, h2, h3, h4 { line-height: 1.15; }
   height: 6px !important;
 }
 .swiper-pagination-bullet-active {
-  background: var(--clr-gold) !important;
+  background: var(--clr-blue) !important;
   width: 24px !important;
   border-radius: 3px !important;
-  transition: width 0.3s var(--ease-gold) !important;
+  transition: width 0.3s var(--ease-blue) !important;
 }
 
 /* ─── Page transitions ──────────────────────────────────────── */
 .page-enter { opacity: 0; transform: translateY(12px); }
 .page-enter-active { opacity: 1; transform: translateY(0); transition: opacity 0.5s, transform 0.5s var(--ease-out); }
-

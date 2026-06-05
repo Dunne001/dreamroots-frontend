@@ -31,8 +31,8 @@ export default function About() {
               transition={{ duration: 0.7 }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                <span className="gold-line" />
-                <span className="label gold">Who We Are</span>
+                <span className="blue-line" />
+                <span className="label blue">Who We Are</span>
               </div>
               <h2 className="display-md" style={{ marginBottom: '1.5rem', fontStyle: 'italic' }}>
                 Every dream has roots.
@@ -47,7 +47,7 @@ export default function About() {
                 ))}
               </div>
               <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem', flexWrap: 'wrap' }}>
-                <Link to="/team" className="btn-gold"><span>Meet Our Team</span></Link>
+                <Link to="/team" className="btn-blue"><span>Meet Our Team</span></Link>
                 <Link to="/board" className="btn-ghost">Board of Directors</Link>
               </div>
             </motion.div>
@@ -78,8 +78,8 @@ export default function About() {
                     border: '1px solid var(--clr-border)',
                   }}
                 >
-                  <div style={{ fontSize: '1.5rem', color: 'var(--clr-gold)', marginBottom: '1rem', opacity: 0.7 }}>{item.icon}</div>
-                  <div className="label gold" style={{ marginBottom: '0.75rem' }}>{item.label}</div>
+                  <div style={{ fontSize: '1.5rem', color: 'var(--clr-blue)', marginBottom: '1rem', opacity: 0.7 }}>{item.icon}</div>
+                  <div className="label blue" style={{ marginBottom: '0.75rem' }}>{item.label}</div>
                   <p style={{ color: 'var(--clr-text-muted)', lineHeight: 1.85, fontSize: '0.9rem' }}>{item.text}</p>
                 </motion.div>
               ))}
@@ -127,12 +127,12 @@ export default function About() {
                 <span aria-hidden style={{
                   position: 'absolute', top: '0.75rem', right: '1rem',
                   fontFamily: 'var(--font-display)', fontSize: '3.5rem',
-                  color: 'rgba(212,175,55,0.05)', letterSpacing: '0.05em', lineHeight: 1,
+                  color: 'rgba(26,86,219,0.05)', letterSpacing: '0.05em', lineHeight: 1,
                 }}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.75rem' }}>
-                  <span className="gold-line" style={{ width: '1.5rem' }} />
+                  <span className="blue-line" style={{ width: '1.5rem' }} />
                 </div>
                 <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', fontWeight: 400, color: 'var(--clr-text)', marginBottom: '0.6rem' }}>
                   {val.title}

@@ -4,6 +4,8 @@ import { useEffect } from 'react'
 
 import Navbar   from './components/layout/Navbar'
 import Footer   from './components/layout/Footer'
+import WhatsAppButton from './components/WhatsAppButton'
+import BackToTop      from './components/BackToTop'
 
 import Home            from './pages/Home'
 import About           from './pages/About'
@@ -49,6 +51,8 @@ export default function App() {
         </AnimatePresence>
       </main>
       <Footer />
+      <WhatsAppButton />
+      <BackToTop />
     </>
   )
 }

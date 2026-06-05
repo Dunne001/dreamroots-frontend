@@ -20,9 +20,9 @@ export default function SectionHeader({ label, title, subtitle, center = false, 
           marginBottom: '1rem',
           justifyContent: center ? 'center' : 'flex-start',
         }}>
-          {!center && <span className="gold-line" />}
-          <span className="label gold">{label}</span>
-          {center && <span className="gold-line-center" style={{ width: '2rem' }} />}
+          {!center && <span className="blue-line" />}
+          <span className="label blue">{label}</span>
+          {center && <span className="blue-line-center" style={{ width: '2rem' }} />}
         </div>
       )}
 

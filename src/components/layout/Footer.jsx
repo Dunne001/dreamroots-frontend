@@ -24,7 +24,7 @@ export default function Footer() {
           {/* Brand column */}
           <div style={{ gridColumn: 'span 1' }}>
             <div style={{ marginBottom: '1.25rem' }}>
-              <div className="font-display gold" style={{ fontSize: '1.1rem', letterSpacing: '0.16em', marginBottom: '4px' }}>DreamRoots</div>
+              <div className="font-display blue" style={{ fontSize: '1.1rem', letterSpacing: '0.16em', marginBottom: '4px' }}>DreamRoots</div>
               <div className="label" style={{ color: 'var(--clr-text-faint)', letterSpacing: '0.3em', fontSize: '0.58rem' }}>Kenya Ltd.</div>
             </div>
             <p style={{ color: 'var(--clr-text-muted)', fontSize: '0.85rem', lineHeight: 1.8, maxWidth: '240px', marginBottom: '1.5rem' }}>
@@ -32,33 +32,39 @@ export default function Footer() {
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
               <a href={`tel:${SITE.phone}`} style={{ color: 'var(--clr-text-faint)', fontSize: '0.8rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'color 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-gold)'}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-blue)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'var(--clr-text-faint)'}
               >
-                <span style={{ color: 'var(--clr-gold)', fontSize: '0.65rem' }}>✆</span> {SITE.phone}
+                <span style={{ color: 'var(--clr-blue)', fontSize: '0.65rem' }}>✆</span> {SITE.phone}
               </a>
               <a href={`mailto:${SITE.email}`} style={{ color: 'var(--clr-text-faint)', fontSize: '0.8rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'color 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-gold)'}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-blue)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'var(--clr-text-faint)'}
               >
-                <span style={{ color: 'var(--clr-gold)', fontSize: '0.65rem' }}>✉</span> {SITE.email}
+                <span style={{ color: 'var(--clr-blue)', fontSize: '0.65rem' }}>✉</span> {SITE.email}
+              </a>
+              <a href={`https://wa.me/${SITE.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--clr-text-faint)', fontSize: '0.8rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'color 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-blue)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--clr-text-faint)'}
+              >
+                <span style={{ color: 'var(--clr-blue)', fontSize: '0.65rem' }}>💬</span> WhatsApp Chat
               </a>
               <span style={{ color: 'var(--clr-text-faint)', fontSize: '0.8rem', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
-                <span style={{ color: 'var(--clr-gold)', fontSize: '0.65rem', marginTop: '2px' }}>◎</span> {SITE.address}
+                <span style={{ color: 'var(--clr-blue)', fontSize: '0.65rem', marginTop: '2px' }}>◎</span> {SITE.address}
               </span>
             </div>
           </div>
 
           {/* Services */}
           <div>
-            <div className="label gold" style={{ marginBottom: '1.25rem' }}>Services</div>
+            <div className="label blue" style={{ marginBottom: '1.25rem' }}>Services</div>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               {SERVICES.map((s) => (
                 <li key={s.slug}>
                   <Link
                     to={`/services/${s.slug}`}
                     style={{ color: 'var(--clr-text-faint)', fontSize: '0.8rem', textDecoration: 'none', letterSpacing: '0.04em', transition: 'color 0.2s' }}
-                    onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-gold)'}
+                    onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-blue)'}
                     onMouseLeave={e => e.currentTarget.style.color = 'var(--clr-text-faint)'}
                   >
                     {s.title}
@@ -70,7 +76,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <div className="label gold" style={{ marginBottom: '1.25rem' }}>Company</div>
+            <div className="label blue" style={{ marginBottom: '1.25rem' }}>Company</div>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               {[
                 { label: 'About Us', path: '/about' },
@@ -83,7 +89,7 @@ export default function Footer() {
                   <Link
                     to={link.path}
                     style={{ color: 'var(--clr-text-faint)', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }}
-                    onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-gold)'}
+                    onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-blue)'}
                     onMouseLeave={e => e.currentTarget.style.color = 'var(--clr-text-faint)'}
                   >
                     {link.label}
@@ -95,11 +101,11 @@ export default function Footer() {
 
           {/* CTA block */}
           <div>
-            <div className="label gold" style={{ marginBottom: '1.25rem' }}>Work With Us</div>
+            <div className="label blue" style={{ marginBottom: '1.25rem' }}>Work With Us</div>
             <p style={{ color: 'var(--clr-text-muted)', fontSize: '0.85rem', lineHeight: 1.8, marginBottom: '1.5rem' }}>
               Ready to transform your organization? Book a consultation with our expert team.
             </p>
-            <Link to="/booking" className="btn-gold" style={{ display: 'inline-flex', justifyContent: 'center', width: '100%' }}>
+            <Link to="/booking" className="btn-blue" style={{ display: 'inline-flex', justifyContent: 'center', width: '100%' }}>
               <span>Book a Consultation</span>
             </Link>
             <Link to="/contact" className="btn-ghost" style={{ display: 'inline-flex', justifyContent: 'center', width: '100%', marginTop: '0.75rem' }}>
@@ -119,7 +125,7 @@ export default function Footer() {
           <div style={{ display: 'flex', gap: '1.5rem' }}>
             {['Privacy Policy'].map(label => (
               <Link key={label} to="#" style={{ color: 'var(--clr-text-faint)', fontSize: '0.72rem', textDecoration: 'none', letterSpacing: '0.08em', transition: 'color 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-gold)'}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-blue)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'var(--clr-text-faint)'}
               >
                 {label}

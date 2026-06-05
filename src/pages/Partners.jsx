@@ -63,7 +63,7 @@ export default function Partners() {
                 transition={{ duration: 0.7 }}
                 style={{ textAlign: 'center', maxWidth: '560px', margin: '0 auto 5rem' }}
               >
-                <span className="gold-line-center" style={{ marginBottom: '2rem' }} />
+                <span className="blue-line-center" style={{ marginBottom: '2rem' }} />
                 <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.4rem, 3vw, 2rem)', fontWeight: 300, fontStyle: 'italic', marginBottom: '1rem' }}>
                   Building a Network of Impact
                 </h2>
@@ -88,7 +88,7 @@ export default function Partners() {
                       textAlign: 'center',
                     }}
                   >
-                    <div style={{ fontSize: '1.5rem', color: 'var(--clr-gold)', opacity: 0.4, marginBottom: '1rem' }}>
+                    <div style={{ fontSize: '1.5rem', color: 'var(--clr-blue)', opacity: 0.4, marginBottom: '1rem' }}>
                       {['◈', '◇', '△', '○'][i]}
                     </div>
                     <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', fontWeight: 300, color: 'var(--clr-text)', marginBottom: '0.5rem' }}>

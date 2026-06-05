@@ -38,13 +38,13 @@ export default function ServiceDetail() {
               transition={{ duration: 0.7 }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                <span style={{ fontSize: '1.6rem', color: 'var(--clr-gold)', opacity: 0.7 }}>{svc.icon}</span>
-                <span className="gold-line" />
+                <span style={{ fontSize: '1.6rem', color: 'var(--clr-blue)', opacity: 0.7 }}>{svc.icon}</span>
+                <span className="blue-line" />
               </div>
               <p style={{ color: 'var(--clr-text-muted)', lineHeight: 1.95, fontSize: '0.95rem', marginBottom: '2.5rem' }}>
                 {svc.description}
               </p>
-              <Link to="/booking" className="btn-gold"><span>Book This Service</span></Link>
+              <Link to="/booking" className="btn-blue"><span>Book This Service</span></Link>
             </motion.div>
 
             {/* Offerings */}
@@ -59,8 +59,8 @@ export default function ServiceDetail() {
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.75rem' }}>
-                <span className="gold-line" />
-                <span className="label gold">What's Included</span>
+                <span className="blue-line" />
+                <span className="label blue">What's Included</span>
               </div>
 
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0' }}>
@@ -80,7 +80,7 @@ export default function ServiceDetail() {
                       fontSize: '0.88rem',
                     }}
                   >
-                    <span style={{ color: 'var(--clr-gold)', fontSize: '0.5rem', flexShrink: 0 }}>◆</span>
+                    <span style={{ color: 'var(--clr-blue)', fontSize: '0.5rem', flexShrink: 0 }}>◆</span>
                     {item}
                   </motion.li>
                 ))}
@@ -97,7 +97,7 @@ export default function ServiceDetail() {
           }}>
             {prev ? (
               <Link to={`/services/${prev.slug}`} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--clr-text-muted)', fontSize: '0.8rem', letterSpacing: '0.1em', textTransform: 'uppercase', transition: 'color 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-gold)'}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-blue)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'var(--clr-text-muted)'}
               >
                 ← {prev.title}
@@ -105,7 +105,7 @@ export default function ServiceDetail() {
             ) : <div />}
 
             <Link to="/services" style={{ color: 'var(--clr-text-faint)', fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-gold)'}
+              onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-blue)'}
               onMouseLeave={e => e.currentTarget.style.color = 'var(--clr-text-faint)'}
             >
               All Services
@@ -113,7 +113,7 @@ export default function ServiceDetail() {
 
             {next ? (
               <Link to={`/services/${next.slug}`} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--clr-text-muted)', fontSize: '0.8rem', letterSpacing: '0.1em', textTransform: 'uppercase', transition: 'color 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-gold)'}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-blue)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'var(--clr-text-faint)'}
               >
                 {next.title} →

@@ -75,9 +75,9 @@ function TeamCard({ member, index }) {
             <span style={{
               position: 'absolute', top: '1rem', right: '1rem',
               padding: '0.25rem 0.65rem',
-              background: 'var(--clr-gold-dim)',
+              background: 'var(--clr-blue-dim)',
               border: '1px solid var(--clr-border-md)',
-              color: 'var(--clr-gold)',
+              color: 'var(--clr-blue)',
               fontSize: '0.6rem',
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
@@ -99,14 +99,14 @@ function TeamCard({ member, index }) {
             }}>
               {member.name}
             </h3>
-            <p className="label" style={{ color: 'var(--clr-gold)', letterSpacing: '0.15em', fontSize: '0.65rem' }}>
+            <p className="label" style={{ color: 'var(--clr-blue)', letterSpacing: '0.15em', fontSize: '0.65rem' }}>
               {member.title}
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.75rem' }}>
               <span style={{ color: 'var(--clr-text-faint)', fontSize: '0.7rem', letterSpacing: '0.1em', fontFamily: 'var(--font-sans)' }}>
                 Hover to view profile
               </span>
-              <span style={{ color: 'var(--clr-gold)', fontSize: '0.7rem' }}>→</span>
+              <span style={{ color: 'var(--clr-blue)', fontSize: '0.7rem' }}>→</span>
             </div>
           </div>
         </div>
@@ -124,16 +124,17 @@ function TeamCard({ member, index }) {
           justifyContent: 'space-between',
           padding: '2rem',
         }}>
-          {/* Gold corner */}
+          {/* Blue corner */}
           <div aria-hidden style={{
             position: 'absolute', top: 0, left: 0, right: 0, height: '3px',
-            background: 'linear-gradient(90deg, transparent, var(--clr-gold), transparent)',
+            background: 'linear-gradient(90deg, transparent, var(--clr-blue), transparent)',
           }} />
 
+          {/* Bio area */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.25rem' }}>
-              <span className="gold-line" />
-              <span className="label gold" style={{ fontSize: '0.6rem' }}>{member.department}</span>
+              <span className="blue-line" />
+              <span className="label blue" style={{ fontSize: '0.6rem' }}>{member.department}</span>
             </div>
 
             <h3 style={{
@@ -145,7 +146,7 @@ function TeamCard({ member, index }) {
             }}>
               {member.name}
             </h3>
-            <p className="label gold" style={{ letterSpacing: '0.15em', fontSize: '0.65rem', marginBottom: '1.25rem' }}>
+            <p className="label blue" style={{ letterSpacing: '0.15em', fontSize: '0.65rem', marginBottom: '1.25rem' }}>
               {member.title}
             </p>
 
@@ -215,8 +216,8 @@ export default function ManagementTeam() {
                 onClick={() => setActiveDept(dept)}
                 style={{
                   padding: '0.45rem 1.1rem',
-                  background: activeDept === dept ? 'var(--clr-gold)' : 'transparent',
-                  border: `1px solid ${activeDept === dept ? 'var(--clr-gold)' : 'var(--clr-border)'}`,
+                  background: activeDept === dept ? 'var(--clr-blue)' : 'transparent',
+                  border: `1px solid ${activeDept === dept ? 'var(--clr-blue)' : 'var(--clr-border)'}`,
                   color: activeDept === dept ? 'var(--clr-void)' : 'var(--clr-text-muted)',
                   fontFamily: 'var(--font-sans)',
                   fontSize: '0.7rem',
@@ -257,7 +258,7 @@ export default function ManagementTeam() {
             layout
             style={{ marginTop: '2.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}
           >
-            <span className="gold-line" />
+            <span className="blue-line" />
             <span style={{ color: 'var(--clr-text-faint)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>
               Showing {filtered.length} of {TEAM.length} team members
             </span>
